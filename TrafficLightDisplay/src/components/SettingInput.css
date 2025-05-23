@@ -1,0 +1,50 @@
+.setting-row {
+  margin-bottom: 10px;
+}
+
+.setting-input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.unit {
+  margin-right: 10px;
+}
+
+.setting-label {
+  min-width: 70px;
+  flex-shrink: 0;
+}
+
+.setting-row input[type="number"] {
+  border-radius: 8px;
+  border: 2px solid transparent;
+  padding: 8px 10px;
+  font-size: 1em;
+  background: var(--color-panel);
+  color: var(--color-white);
+  margin: 0 6px;
+  outline: none;
+  box-shadow: 0 1px 4px #0002;
+  transition: background 0.2s;
+  width: 60px;
+}
+
+.setting-row input[type="number"]:focus {
+  background: var(--color-panel-hover);
+}
+
+/* Color-specific input styles */
+.red-setting input.red-input {
+  border-color: var(--color-red);
+}
+
+.yellow-setting input.yellow-input {
+  border-color: var(--color-yellow);
+}
+
+.green-setting input.green-input {
+  border-color: var(--color-green);
+}

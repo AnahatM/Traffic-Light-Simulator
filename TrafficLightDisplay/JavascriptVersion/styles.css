@@ -1,0 +1,178 @@
+/* CSS Variables for colors */
+:root {
+  --color-bg: #000;
+  --color-panel: #181c22e6;
+  --color-panel-blur: blur(10px);
+  --color-border: #000;
+  --color-red: #d32f2f;
+  --color-yellow: #fbc02d;
+  --color-green: #43a047;
+  --color-inactive-red: #2a0a0a;
+  --color-inactive-yellow: #332a08;
+  --color-inactive-green: #0a1a0a;
+  --color-white: #fff;
+  --color-panel-hover: #343a40;
+  --color-shadow: 0 4px 24px #0007;
+}
+body {
+  background: var(--color-bg);
+  color: var(--color-white);
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+.settings-collapsible {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 10;
+}
+#toggleSettings {
+  font-size: 1.5em;
+  background: var(--color-panel);
+  backdrop-filter: var(--color-panel-blur);
+  color: var(--color-white);
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px #0004;
+  transition: background 0.2s, box-shadow 0.2s;
+  aspect-ratio: 1/1;
+}
+#toggleSettings:hover {
+  background: var(--color-panel-hover);
+  box-shadow: 0 4px 16px #0006;
+}
+.settings {
+  margin: 0;
+  left: 0;
+  top: 0;
+  box-shadow: var(--color-shadow);
+  border-radius: 18px;
+  min-width: 340px;
+  max-width: 95vw;
+  margin-left: 0;
+  margin-right: 0;
+  background: var(--color-panel);
+  backdrop-filter: var(--color-panel-blur);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: var(--color-shadow);
+  display: block;
+  transition: max-height 0.4s, opacity 0.4s;
+  max-height: 500px;
+  opacity: 1;
+  overflow: hidden;
+  border: none;
+}
+.settings.collapsed {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 20px;
+  border-width: 0;
+}
+.settings label {
+  display: block;
+  font-weight: 500;
+}
+.settings input,
+.settings select {
+  border-radius: 8px;
+  border: none;
+  padding: 8px 10px;
+  font-size: 1em;
+  background: var(--color-panel);
+  backdrop-filter: var(--color-panel-blur);
+  color: var(--color-white);
+  margin-left: 6px;
+  margin-right: 6px;
+  outline: none;
+  box-shadow: 0 1px 4px #0002;
+  transition: background 0.2s;
+}
+.settings input:focus,
+.settings select:focus {
+  background: var(--color-panel-hover);
+}
+.settings button {
+  font-size: 1em;
+  padding: 8px 24px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  border: none;
+  background: var(--color-panel);
+  backdrop-filter: var(--color-panel-blur);
+  color: var(--color-white);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  width: 100%;
+  height: 50px;
+}
+.settings button:hover {
+  background: var(--color-panel-hover);
+}
+.settings input[type="checkbox"] {
+  accent-color: var(--color-panel-hover);
+  margin-left: 10px;
+}
+.traffic-lights {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  z-index: 1;
+}
+.light {
+  flex: 1 1 0;
+  height: 100vh;
+  width: 33.33vw;
+  border: none;
+  border-right: 4px solid var(--color-border);
+  border-left: 4px solid var(--color-border);
+  box-sizing: border-box;
+  transition: background 0.7s;
+  display: block;
+}
+.light:first-child {
+  border-left: none;
+}
+.light:last-child {
+  border-right: none;
+}
+.red {
+  background: var(--color-red);
+}
+.yellow {
+  background: var(--color-yellow);
+}
+.green {
+  background: var(--color-green);
+}
+.light.inactive.red {
+  background: var(--color-inactive-red);
+}
+.light.inactive.yellow {
+  background: var(--color-inactive-yellow);
+}
+.light.inactive.green {
+  background: var(--color-inactive-green);
+}
+@media (max-width: 500px) {
+  .settings {
+    min-width: 0;
+    width: 95vw;
+    font-size: 1em;
+    padding: 10px 5vw;
+  }
+  .settings-collapsible {
+    left: 8px;
+    top: 8px;
+  }
+}

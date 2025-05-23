@@ -1,0 +1,36 @@
+.setting-checkbox {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+/* Stand-alone checkbox (not in a setting-row) */
+.settings > .setting-checkbox {
+  margin: 15px 0;
+}
+
+/* Make sure checkboxes appear side-by-side with inputs */
+.setting-input-container .setting-checkbox {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+/* Make the checkbox labels more clickable */
+.setting-checkbox input[type="checkbox"] + label {
+  cursor: pointer;
+  padding: 4px;
+}
+
+.setting-checkbox input[type="checkbox"] {
+  accent-color: var(--color-panel-hover);
+  margin-right: 8px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.setting-checkbox label {
+  font-weight: normal;
+  cursor: pointer;
+}

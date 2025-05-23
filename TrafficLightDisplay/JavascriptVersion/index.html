@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Traffic Light Simulator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="settings-collapsible">
+      <button id="toggleSettings">⚙️</button>
+      <div class="settings" id="settingsPanel">
+        <label
+          >Red
+          <input type="number" id="redTime" value="3" min="0.2" step="0.1" /> s
+          <input
+            type="checkbox"
+            id="enableRed"
+            checked
+            style="margin-left: 10px"
+          />
+          Enable</label
+        ><br />
+        <label
+          >Yellow
+          <input type="number" id="yellowTime" value="3" min="0.2" step="0.1" />
+          s
+          <input
+            type="checkbox"
+            id="enableYellow"
+            checked
+            style="margin-left: 10px"
+          />
+          Enable</label
+        ><br />
+        <label
+          >Green
+          <input type="number" id="greenTime" value="3" min="0.2" step="0.1" />
+          s
+          <input
+            type="checkbox"
+            id="enableGreen"
+            checked
+            style="margin-left: 10px"
+          />
+          Enable</label
+        ><br />
+        <label
+          >Hide disabled lights
+          <input
+            type="checkbox"
+            id="hideDisabledLights"
+            style="margin-left: 10px" /></label
+        ><br />
+        <label
+          >Direction
+          <select id="directionSelect">
+            <option value="vertical">Vertical</option>
+            <option value="horizontal">Horizontal</option>
+          </select> </label
+        ><br />
+        <button id="applySettings">Apply</button>
+        <button id="resetSettings">Reset</button>
+      </div>
+    </div>
+    <div class="traffic-lights">
+      <div class="light red" id="redLight"></div>
+      <div class="light yellow" id="yellowLight"></div>
+      <div class="light green" id="greenLight"></div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

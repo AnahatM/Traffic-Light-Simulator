@@ -1,0 +1,36 @@
+.setting-row {
+  margin: 15px 0;
+}
+
+.setting-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--color-white);
+  font-weight: 500;
+}
+
+select {
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--color-panel-hover);
+  color: var(--color-white);
+  font-size: 1em;
+  appearance: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 6px;
+}
+
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-white);
+}
+
+/* .setting-row select styling */
+.setting-row label {
+  position: relative;
+  width: 100%;
+  display: block;
+}
