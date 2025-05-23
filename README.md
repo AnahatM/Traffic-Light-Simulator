@@ -6,6 +6,8 @@ Used for a robotics project with color detection to simulate an intersection lig
 
 Source code also includes a simple plain HTML CSS JS version.
 
+![Traffic Light Display Simulator Screenshot](public/Traffic-Light-Display%20Screenshot.png)
+
 ## Features
 
 - **Fully interactive traffic light**: Red, yellow, and green lights cycle automatically.
@@ -39,7 +41,3 @@ Source code also includes a simple plain HTML CSS JS version.
 ## Customization
 
 - Edit `defaultSettings` in `App.tsx` to change initial values.
-
-## License
-
-MIT
