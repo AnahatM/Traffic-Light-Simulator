@@ -6,7 +6,8 @@ Used for a robotics project with color detection to simulate an intersection lig
 
 Source code also includes a simple plain HTML CSS JS version.
 
-![Traffic Light Display Simulator Screenshot](public/Traffic-Light-Display%20Screenshot.png)
+![Traffic Light Display Simulator Screenshot](public/Traffic-Light-Display-Screenshot.png)
+![Traffic Light Display Circular Layout Screenshot](public/Traffic-Light-Circular-Screenshot.png)
 
 ## Features
 

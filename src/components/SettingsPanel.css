@@ -42,10 +42,10 @@
   border-radius: 16px;
   box-shadow: var(--color-shadow);
   display: block;
-  transition: max-height 0.4s, opacity 0.4s;
-  max-height: 800px;
+  transition: max-height 0.4s, opacity 0.4s, padding 0.4s;
+  max-height: 85vh;
+  overflow-y: auto;
   opacity: 1;
-  overflow: hidden;
   border: none;
 }
 
@@ -54,6 +54,7 @@
   opacity: 0;
   padding: 0 20px;
   border-width: 0;
+  overflow: hidden; /* Hide overflow when collapsed */
 }
 
 .settings-buttons {
@@ -144,8 +145,10 @@
   .settings {
     min-width: 0;
     width: 95vw;
+    max-width: 95vw;
     font-size: 0.9em;
     padding: 15px 5vw;
+    max-height: 90vh; /* Allow slightly more height on mobile */
   }
 
   .settings-collapsible {
