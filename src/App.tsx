@@ -20,20 +20,25 @@ function App() {
   const [randomRange, setRandomRange] = useState({ min: 0.5, max: 5 });
   const [fullscreen, setFullscreen] = useState(false);
   const [enableShading, setEnableShading] = useState(true);
+  const [displayLayout, setDisplayLayout] = useState<
+    "rectangular" | "circular"
+  >("rectangular");
 
   return (
     <div className="app-container">
+      {" "}
       <TrafficLight
         times={times}
         enabled={enabled}
         hideDisabled={hideDisabled}
         direction={direction}
+        displayLayout={displayLayout}
         enableClickingLights={enableClickingLights}
         randomizeTimes={randomizeTimes}
         randomRange={randomRange}
         fullscreen={fullscreen}
         enableShading={enableShading}
-      />
+      />{" "}
       <SettingsPanel
         times={times}
         setTimes={setTimes}
@@ -43,6 +48,8 @@ function App() {
         setHideDisabled={setHideDisabled}
         direction={direction}
         setDirection={setDirection}
+        displayLayout={displayLayout}
+        setDisplayLayout={setDisplayLayout}
         enableClickingLights={enableClickingLights}
         setEnableClickingLights={setEnableClickingLights}
         randomizeTimes={randomizeTimes}

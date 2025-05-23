@@ -18,6 +18,7 @@ interface TrafficLightProps {
   enabled: LightState;
   hideDisabled: boolean;
   direction: "vertical" | "horizontal";
+  displayLayout: "rectangular" | "circular";
   enableClickingLights?: boolean;
   randomizeTimes?: boolean;
   randomRange?: { min: number; max: number };
@@ -30,6 +31,7 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
   enabled,
   hideDisabled,
   direction,
+  displayLayout,
   enableClickingLights = true,
   randomizeTimes = false,
   randomRange = { min: 0.5, max: 5 },
@@ -135,7 +137,7 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
     <div
       className={`traffic-lights ${direction} ${
         fullscreen ? "fullscreen" : ""
-      } ${enableShading ? "shaded" : ""}`}
+      } ${enableShading ? "shaded" : ""} ${displayLayout}`}
     >
       {order.map((color) => (
         <div

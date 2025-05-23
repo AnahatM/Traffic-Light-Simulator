@@ -14,6 +14,8 @@ interface SettingsPanelProps {
   setHideDisabled: (hide: boolean) => void;
   direction: "vertical" | "horizontal";
   setDirection: (direction: "vertical" | "horizontal") => void;
+  displayLayout: "rectangular" | "circular";
+  setDisplayLayout: (layout: "rectangular" | "circular") => void;
   enableClickingLights?: boolean;
   setEnableClickingLights?: (enable: boolean) => void;
   randomizeTimes?: boolean;
@@ -35,6 +37,8 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
   setHideDisabled,
   direction,
   setDirection,
+  displayLayout,
+  setDisplayLayout,
   enableClickingLights = true,
   setEnableClickingLights,
   randomizeTimes = false,
@@ -54,6 +58,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
     enabled: { ...enabled },
     hideDisabled,
     direction,
+    displayLayout,
     enableClickingLights:
       enableClickingLights !== undefined ? enableClickingLights : true,
     randomizeTimes: randomizeTimes !== undefined ? randomizeTimes : false,
@@ -85,12 +90,12 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
       },
     }));
   };
-
   const applySettings = () => {
     setTimes(formValues.times);
     setEnabled(formValues.enabled);
     setHideDisabled(formValues.hideDisabled);
     setDirection(formValues.direction);
+    setDisplayLayout(formValues.displayLayout);
     if (setEnableClickingLights) {
       setEnableClickingLights(formValues.enableClickingLights);
     }
@@ -113,18 +118,19 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
       enabled: { red: true, yellow: true, green: true },
       hideDisabled: false,
       direction: "vertical" as const,
+      displayLayout: "rectangular" as const,
       enableClickingLights: true,
       randomizeTimes: false,
       randomRange: { min: 0.5, max: 5 },
       fullscreen: false,
       enableShading: true,
     };
-
     setFormValues(defaultSettings);
     setTimes(defaultSettings.times);
     setEnabled(defaultSettings.enabled);
     setHideDisabled(defaultSettings.hideDisabled);
     setDirection(defaultSettings.direction);
+    setDisplayLayout(defaultSettings.displayLayout);
     if (setEnableClickingLights) {
       setEnableClickingLights(defaultSettings.enableClickingLights);
     }
@@ -161,7 +167,6 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
             onChange={(checked) => updateEnabled("red", checked)}
           />
         </SettingInput>
-
         <SettingInput
           label="Yellow"
           value={formValues.times.yellow}
@@ -175,7 +180,6 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
             onChange={(checked) => updateEnabled("yellow", checked)}
           />
         </SettingInput>
-
         <SettingInput
           label="Green"
           value={formValues.times.green}
@@ -189,7 +193,6 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
             onChange={(checked) => updateEnabled("green", checked)}
           />
         </SettingInput>
-
         <div className="setting-checkbox-group">
           <SettingCheckbox
             label="Hide disabled lights"
@@ -230,7 +233,6 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
             }
           />
         </div>
-
         {formValues.randomizeTimes && (
           <div className="random-time-settings">
             <div className="setting-row">
@@ -284,8 +286,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
               </label>
             </div>
           </div>
-        )}
-
+        )}{" "}
         <SettingSelect
           label="Direction"
           value={formValues.direction}
@@ -300,7 +301,20 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
             }))
           }
         />
-
+        <SettingSelect
+          label="Display Layout"
+          value={formValues.displayLayout}
+          options={[
+            { value: "rectangular", label: "Rectangular" },
+            { value: "circular", label: "Circular" },
+          ]}
+          onChange={(value) =>
+            setFormValues((prev) => ({
+              ...prev,
+              displayLayout: value as "rectangular" | "circular",
+            }))
+          }
+        />
         <div className="settings-buttons">
           <button id="applySettings" onClick={applySettings}>
             Apply
@@ -309,7 +323,6 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
             Reset
           </button>
         </div>
-
         <div className="settings-footer">
           <a
             href="https://github.com/AnahatM/Traffic-Light-Simulator"
