@@ -4,6 +4,8 @@ A modern, interactive traffic light simulator built with React. Easily adjust li
 
 Used for a robotics project with color detection to simulate an intersection light.
 
+Source code also includes a simple plain HTML CSS JS version.
+
 ## Features
 
 - **Fully interactive traffic light**: Red, yellow, and green lights cycle automatically.
