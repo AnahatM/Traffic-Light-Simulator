@@ -312,7 +312,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
 
         <div className="settings-footer">
           <a
-            href="https://github.com/AnahatM/Traffic-Light-Display"
+            href="https://github.com/AnahatM/Traffic-Light-Simulator"
             target="_blank"
             rel="noopener noreferrer"
           >
