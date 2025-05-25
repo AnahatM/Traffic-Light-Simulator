@@ -3,6 +3,7 @@ import "./SettingsPanel.css";
 import SettingInput from "./SettingInput.tsx";
 import SettingCheckbox from "./SettingCheckbox.tsx";
 import SettingSelect from "./SettingSelect.tsx";
+import ColorPicker from "./ColorPicker";
 import type { LightState, LightTiming } from "./TrafficLight";
 
 interface SettingsPanelProps {
@@ -26,6 +27,12 @@ interface SettingsPanelProps {
   setFullscreen?: (enable: boolean) => void;
   enableShading?: boolean;
   setEnableShading?: (enable: boolean) => void;
+  customColors: { red: string; yellow: string; green: string };
+  setCustomColors: (colors: {
+    red: string;
+    yellow: string;
+    green: string;
+  }) => void;
 }
 
 const SettingsPanel: React.FC<SettingsPanelProps> = ({
@@ -49,10 +56,12 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
   setFullscreen,
   enableShading = true,
   setEnableShading,
+  customColors,
+  setCustomColors,
 }) => {
   const [collapsed, setCollapsed] = useState(true);
 
-  // Local state to track form values
+  // Local state to track form values (including colors)
   const [formValues, setFormValues] = useState({
     times: { ...times },
     enabled: { ...enabled },
@@ -65,6 +74,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
     randomRange: randomRange || { min: 0.5, max: 5 },
     fullscreen: fullscreen !== undefined ? fullscreen : false,
     enableShading: enableShading !== undefined ? enableShading : true,
+    colors: { ...customColors },
   });
 
   const toggleCollapse = () => {
@@ -90,6 +100,17 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
       },
     }));
   };
+
+  const updateColor = (color: keyof typeof customColors, value: string) => {
+    setFormValues((prev) => ({
+      ...prev,
+      colors: {
+        ...prev.colors,
+        [color]: value,
+      },
+    }));
+  };
+
   const applySettings = () => {
     setTimes(formValues.times);
     setEnabled(formValues.enabled);
@@ -111,7 +132,9 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
     if (setEnableShading) {
       setEnableShading(formValues.enableShading);
     }
+    setCustomColors(formValues.colors);
   };
+
   const resetSettings = () => {
     const defaultSettings = {
       times: { red: 1, yellow: 1, green: 1 },
@@ -124,6 +147,11 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
       randomRange: { min: 0.5, max: 5 },
       fullscreen: false,
       enableShading: true,
+      colors: {
+        red: "#d32f2f",
+        yellow: "#fbc02d",
+        green: "#43a047",
+      },
     };
     setFormValues(defaultSettings);
     setTimes(defaultSettings.times);
@@ -146,6 +174,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
     if (setEnableShading) {
       setEnableShading(defaultSettings.enableShading);
     }
+    setCustomColors(defaultSettings.colors);
   };
 
   return (
@@ -161,6 +190,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
           step={0.1}
           onChange={(value) => updateTime("red", value)}
         >
+          <ColorPicker
+            color={formValues.colors.red}
+            onChange={(color) => updateColor("red", color)}
+          />
           <SettingCheckbox
             label="Enable Red"
             checked={formValues.enabled.red}
@@ -174,6 +207,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
           step={0.1}
           onChange={(value) => updateTime("yellow", value)}
         >
+          <ColorPicker
+            color={formValues.colors.yellow}
+            onChange={(color) => updateColor("yellow", color)}
+          />
           <SettingCheckbox
             label="Enable Yellow"
             checked={formValues.enabled.yellow}
@@ -187,6 +224,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
           step={0.1}
           onChange={(value) => updateTime("green", value)}
         >
+          <ColorPicker
+            color={formValues.colors.green}
+            onChange={(color) => updateColor("green", color)}
+          />
           <SettingCheckbox
             label="Enable Green"
             checked={formValues.enabled.green}

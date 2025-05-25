@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import TrafficLight from "./components/TrafficLight";
 import SettingsPanel from "./components/SettingsPanel";
@@ -23,6 +23,26 @@ function App() {
   const [displayLayout, setDisplayLayout] = useState<
     "rectangular" | "circular"
   >("rectangular");
+
+  // New custom color state with default colors aligning to index.css values
+  const [customColors, setCustomColors] = useState({
+    red: "#d32f2f",
+    yellow: "#fbc02d",
+    green: "#43a047",
+  });
+
+  // Update CSS variables so TrafficLight and shading update automatically
+  useEffect(() => {
+    document.documentElement.style.setProperty("--color-red", customColors.red);
+    document.documentElement.style.setProperty(
+      "--color-yellow",
+      customColors.yellow
+    );
+    document.documentElement.style.setProperty(
+      "--color-green",
+      customColors.green
+    );
+  }, [customColors]);
 
   return (
     <div className="app-container">
@@ -60,6 +80,8 @@ function App() {
         setFullscreen={setFullscreen}
         enableShading={enableShading}
         setEnableShading={setEnableShading}
+        customColors={customColors}
+        setCustomColors={setCustomColors}
       />
     </div>
   );

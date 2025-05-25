@@ -1,0 +1,9 @@
+.color-picker {
+  border: none;
+  background: none;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 8px;
+}
