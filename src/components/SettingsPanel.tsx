@@ -162,7 +162,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
           onChange={(value) => updateTime("red", value)}
         >
           <SettingCheckbox
-            label="Enable"
+            label="Enable Red"
             checked={formValues.enabled.red}
             onChange={(checked) => updateEnabled("red", checked)}
           />
@@ -175,7 +175,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
           onChange={(value) => updateTime("yellow", value)}
         >
           <SettingCheckbox
-            label="Enable"
+            label="Enable Yellow"
             checked={formValues.enabled.yellow}
             onChange={(checked) => updateEnabled("yellow", checked)}
           />
@@ -188,7 +188,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
           onChange={(value) => updateTime("green", value)}
         >
           <SettingCheckbox
-            label="Enable"
+            label="Enable Green"
             checked={formValues.enabled.green}
             onChange={(checked) => updateEnabled("green", checked)}
           />
