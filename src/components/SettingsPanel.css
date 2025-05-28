@@ -181,11 +181,7 @@
   bottom: 0;
   height: 32px;
   pointer-events: none;
-  background: linear-gradient(
-    to top,
-    var(--settings-panel-bg) 80%,
-    rgba(24, 28, 34, 0) 100%
-  );
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
   border-radius: 0 0 12px 12px;
   z-index: 2;
 }
@@ -288,6 +284,88 @@
 .color-row-delete-btn:hover {
   color: var(--settings-panel-delete-hover);
   background: rgba(255, 0, 0, 0.08);
+}
+
+.random-range-controls {
+  background: var(--settings-panel-bg);
+  border-radius: 16px;
+  padding: 1.2em 1.5em 1.2em 1.5em;
+  margin-bottom: 1.2em;
+  margin-top: 0.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+.random-range-controls label {
+  color: var(--settings-panel-label, #e0e0e0);
+  font-size: 1.05em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+
+.random-range-controls input[type="number"] {
+  background: var(--settings-panel-input-bg, #181d1c);
+  color: var(--settings-panel-input, #fff);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5em 1em;
+  font-size: 1.2em;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+
+.random-range-controls input[type="number"]:focus {
+  box-shadow: 0 0 0 2px var(--settings-panel-accent, #4fc3f7);
+}
+
+.color-panel.random-range-controls {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  padding: 1.2em 1.5em 1.2em 1.5em;
+  margin-bottom: 1.2em;
+  margin-top: 0.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+.random-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2em;
+  margin-bottom: 0.5em;
+}
+
+.random-row label {
+  color: var(--settings-panel-label, #e0e0e0);
+  font-size: 1.05em;
+  min-width: 6em;
+  margin-bottom: 0;
+  margin-right: 0.5em;
+  text-align: left;
+}
+
+.random-input {
+  background: var(--settings-panel-input-bg, #181d1c);
+  color: var(--settings-panel-input, #fff);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5em 1em;
+  font-size: 1.2em;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+
+.random-input:focus {
+  box-shadow: 0 0 0 2px var(--settings-panel-accent, #4fc3f7);
 }
 
 @media (max-width: 500px) {

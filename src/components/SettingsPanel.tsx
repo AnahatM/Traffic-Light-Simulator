@@ -175,6 +175,53 @@ const SettingsPanel: React.FC<SettingsPanelProps> = (props) => {
           formValues={formValues}
           setFormValues={setFormValues}
         />
+        {formValues.randomizeTimes && (
+          <div
+            className="color-panel random-range-controls"
+            style={{ marginTop: 0, marginBottom: "1.2em" }}
+          >
+            <div className="random-row">
+              <label htmlFor="min-time">Min time (s)</label>
+              <input
+                id="min-time"
+                type="number"
+                min={0.1}
+                step={0.1}
+                value={formValues.randomRange.min}
+                onChange={(e) =>
+                  setFormValues((f) => ({
+                    ...f,
+                    randomRange: {
+                      ...f.randomRange,
+                      min: parseFloat(e.target.value),
+                    },
+                  }))
+                }
+                className="random-input"
+              />
+            </div>
+            <div className="random-row">
+              <label htmlFor="max-time">Max time (s)</label>
+              <input
+                id="max-time"
+                type="number"
+                min={formValues.randomRange.min}
+                step={0.1}
+                value={formValues.randomRange.max}
+                onChange={(e) =>
+                  setFormValues((f) => ({
+                    ...f,
+                    randomRange: {
+                      ...f.randomRange,
+                      max: parseFloat(e.target.value),
+                    },
+                  }))
+                }
+                className="random-input"
+              />
+            </div>
+          </div>
+        )}
         <SettingsPanelButtons
           applySettings={() => {
             props.setTimes(formValues.times);
