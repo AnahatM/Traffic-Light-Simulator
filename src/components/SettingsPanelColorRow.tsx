@@ -24,7 +24,6 @@ interface ColorRowProps {
 }
 
 const ColorRow: React.FC<ColorRowProps> = ({
-  color,
   label,
   value,
   enabled,
@@ -104,8 +103,7 @@ const ColorRow: React.FC<ColorRowProps> = ({
     </div>
     <div className="color-row-delete">
       <button
-        className="arrow-btn"
-        style={{ color: "#e57373" }}
+        className="arrow-btn color-row-delete-btn"
         onClick={onDelete}
         title="Delete color"
         tabIndex={-1}

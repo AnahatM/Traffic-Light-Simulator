@@ -41,7 +41,7 @@ const LoopPanel: React.FC<LoopPanelProps> = ({
   deleteColor,
   addNewColor,
 }) => (
-  <div className="loop-panel">
+  <div className="loop-panel" style={{ position: "relative" }}>
     {colorOrder.map((color, idx) => (
       <ColorRow
         key={color}

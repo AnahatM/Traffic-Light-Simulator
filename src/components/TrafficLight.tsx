@@ -21,7 +21,7 @@ interface TrafficLightProps {
   fullscreen?: boolean;
   enableShading?: boolean;
   colorOrder: string[];
-  loopMode?: "cycle" | "pingpong";
+  loopMode?: "cycle" | "pingpong" | "random";
   customColors?: Record<string, string>;
 }
 
@@ -44,8 +44,19 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
   const [, setCurrentTimes] = useState<LightTiming>({ ...times });
   const timerRef = useRef<number | null>(null);
   const [directionForward, setDirectionForward] = useState<boolean>(true);
+  const [randomQueue, setRandomQueue] = useState<string[]>([]);
 
-  // Find next enabled light (cycle or pingpong)
+  // Helper to shuffle an array
+  function shuffle<T>(array: T[]): T[] {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  // Find next enabled light (cycle, pingpong, or random)
   const findNextColor = (
     currentColor: string,
     forward: boolean
@@ -54,17 +65,32 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
     if (visibleLights.length === 0) {
       return { nextColor: colorOrder[0], nextDirection: true };
     }
-    const currentIndex = colorOrder.indexOf(currentColor);
+    if (loopMode === "random") {
+      // If queue is empty or currentColor not in queue, reshuffle
+      let queue = randomQueue.length > 0 ? randomQueue : shuffle(visibleLights);
+      // Remove currentColor if it's at the front
+      if (queue[0] === currentColor) queue.shift();
+      // If queue is empty after shift, reshuffle
+      if (queue.length === 0) queue = shuffle(visibleLights);
+      const nextColor = queue[0];
+      setRandomQueue(queue);
+      return { nextColor, nextDirection: true };
+    }
     if (loopMode === "cycle") {
       // Standard cycle mode
-      let nextIndex = (currentIndex + 1) % colorOrder.length;
+      let nextIndex =
+        (colorOrder.indexOf(currentColor) + 1) % colorOrder.length;
       // Find the next enabled light
-      while (!enabled[colorOrder[nextIndex]] && nextIndex !== currentIndex) {
+      while (
+        !enabled[colorOrder[nextIndex]] &&
+        nextIndex !== colorOrder.indexOf(currentColor)
+      ) {
         nextIndex = (nextIndex + 1) % colorOrder.length;
       }
       return { nextColor: colorOrder[nextIndex], nextDirection: true };
     } else {
       // Pingpong mode
+      let currentIndex = colorOrder.indexOf(currentColor);
       let nextIndex = currentIndex + (forward ? 1 : -1);
       let nextDir = forward;
       // Bounce at ends
@@ -111,6 +137,13 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
     }
     const visibleLights = colorOrder.filter((c) => enabled[c]);
     if (visibleLights.length === 0) return;
+    // For random mode, reset queue if needed
+    if (
+      loopMode === "random" &&
+      (randomQueue.length === 0 || !randomQueue.includes(color))
+    ) {
+      setRandomQueue(shuffle(visibleLights));
+    }
     // Get the time for this light (random or fixed)
     const duration = randomizeTimes ? getRandomTime(color) : times[color];
     // Update the current times state for display

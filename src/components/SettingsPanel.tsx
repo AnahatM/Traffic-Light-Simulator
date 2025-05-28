@@ -1,9 +1,7 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./SettingsPanel.css";
-import SettingInput from "./SettingInput.tsx";
 import SettingCheckbox from "./SettingCheckbox.tsx";
 import SettingSelect from "./SettingSelect.tsx";
-import ColorPicker from "./ColorPicker";
 import type { LightState, LightTiming } from "./TrafficLight";
 import LoopPanel from "./SettingsPanelLoopPanel.tsx";
 
@@ -35,13 +33,6 @@ interface SettingsPanelProps {
   loopMode: "cycle" | "pingpong";
   setLoopMode: (mode: "cycle" | "pingpong") => void;
 }
-
-const colorLabels: Record<string, string> = {
-  red: "Red",
-  yellow: "Yellow",
-  green: "Green",
-  yellow2: "Yellow",
-};
 
 const SettingsPanel: React.FC<SettingsPanelProps> = ({
   times,
@@ -247,42 +238,64 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
     setLoopModeLocal("pingpong");
   };
 
+  // Fading gradient for overflow: add .has-overflow class if scrollable
+  useEffect(() => {
+    const panel = loopPanelRef.current;
+    if (!panel) return;
+    const checkOverflow = () => {
+      if (panel.scrollHeight > panel.clientHeight) {
+        panel.classList.add("has-overflow");
+      } else {
+        panel.classList.remove("has-overflow");
+      }
+    };
+    checkOverflow();
+    panel.addEventListener("scroll", checkOverflow);
+    window.addEventListener("resize", checkOverflow);
+    return () => {
+      panel.removeEventListener("scroll", checkOverflow);
+      window.removeEventListener("resize", checkOverflow);
+    };
+  }, [formValues.colorOrder.length]);
+
   return (
     <div className="settings-collapsible">
       <button id="toggleSettings" onClick={toggleCollapse}>
         ⚙️
       </button>
       <div className={`settings ${collapsed ? "collapsed" : ""}`}>
-        <LoopPanel
-          colorOrder={formValues.colorOrder}
-          colors={formValues.colors}
-          times={formValues.times}
-          enabled={formValues.enabled}
-          updateTime={updateTime}
-          updateColor={updateColor}
-          updateEnabled={updateEnabled}
-          moveColor={moveColor}
-          handleDragStart={handleDragStart}
-          handleDragOver={handleDragOver}
-          handleDragEnd={handleDragEnd}
-          draggedIdx={draggedIdx}
-          deleteColor={(color: string) => {
-            setFormValues((prev) => {
-              const newOrder = prev.colorOrder.filter((c) => c !== color);
-              const { [color]: _, ...newColors } = prev.colors;
-              const { [color]: __, ...newTimes } = prev.times;
-              const { [color]: ___, ...newEnabled } = prev.enabled;
-              return {
-                ...prev,
-                colorOrder: newOrder,
-                colors: newColors,
-                times: newTimes,
-                enabled: newEnabled,
-              };
-            });
-          }}
-          addNewColor={addNewColor}
-        />
+        <div ref={loopPanelRef}>
+          <LoopPanel
+            colorOrder={formValues.colorOrder}
+            colors={formValues.colors}
+            times={formValues.times}
+            enabled={formValues.enabled}
+            updateTime={updateTime}
+            updateColor={updateColor}
+            updateEnabled={updateEnabled}
+            moveColor={moveColor}
+            handleDragStart={handleDragStart}
+            handleDragOver={handleDragOver}
+            handleDragEnd={handleDragEnd}
+            draggedIdx={draggedIdx}
+            deleteColor={(color: string) => {
+              setFormValues((prev) => {
+                const newOrder = prev.colorOrder.filter((c) => c !== color);
+                const { [color]: _, ...newColors } = prev.colors;
+                const { [color]: __, ...newTimes } = prev.times;
+                const { [color]: ___, ...newEnabled } = prev.enabled;
+                return {
+                  ...prev,
+                  colorOrder: newOrder,
+                  colors: newColors,
+                  times: newTimes,
+                  enabled: newEnabled,
+                };
+              });
+            }}
+            addNewColor={addNewColor}
+          />
+        </div>
         <SettingSelect
           label="Loop Mode"
           value={loopModeLocal}

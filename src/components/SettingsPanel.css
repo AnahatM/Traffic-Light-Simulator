@@ -1,3 +1,21 @@
+/*
+  SettingsPanel color variables (consolidated)
+  --------------------------------------------------
+  These variables are used for the settings panel and its subcomponents.
+*/
+:root {
+  --settings-panel-bg: var(--color-panel);
+  --settings-panel-hover: var(--color-panel-hover);
+  --settings-panel-border: var(--color-border);
+  --settings-panel-shadow: var(--color-shadow);
+  --settings-panel-white: var(--color-white);
+  --settings-panel-red: var(--color-red);
+  --settings-panel-yellow: var(--color-yellow);
+  --settings-panel-green: var(--color-green);
+  --settings-panel-delete-hover: #e57373;
+  --settings-panel-delete-default: var(--color-white);
+}
+
 .settings-collapsible {
   position: fixed;
   top: 24px;
@@ -152,6 +170,24 @@
   flex-direction: column;
   gap: 8px;
   box-shadow: 0 2px 8px #0002;
+  position: relative;
+}
+
+.loop-panel.has-overflow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 32px;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    var(--settings-panel-bg) 80%,
+    rgba(24, 28, 34, 0) 100%
+  );
+  border-radius: 0 0 12px 12px;
+  z-index: 2;
 }
 
 .color-row-panel {
@@ -231,6 +267,27 @@
   display: flex;
   align-items: center;
   margin-left: 8px;
+}
+
+.color-row-delete .arrow-btn {
+  color: var(--settings-panel-delete-default);
+  transition: color 0.18s, background 0.18s;
+}
+
+.color-row-delete .arrow-btn:hover {
+  color: var(--settings-panel-delete-hover);
+  background: rgba(255, 0, 0, 0.08);
+}
+
+.color-row-delete-btn {
+  color: var(--settings-panel-delete-default);
+  background: none;
+  transition: color 0.18s, background 0.18s;
+}
+
+.color-row-delete-btn:hover {
+  color: var(--settings-panel-delete-hover);
+  background: rgba(255, 0, 0, 0.08);
 }
 
 @media (max-width: 500px) {
