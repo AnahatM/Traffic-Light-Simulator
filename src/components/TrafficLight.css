@@ -21,6 +21,9 @@
   justify-content: center;
   gap: 5vmin;
   padding: 2vmin;
+  flex-wrap: wrap;
+  max-width: 90vw;
+  max-height: 90vh;
 }
 
 .traffic-lights.circular.vertical {
@@ -37,18 +40,26 @@
   aspect-ratio: 1/1 !important;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   border: 2px solid var(--color-border);
-}
-
-.traffic-lights.circular.vertical .light {
   width: 25vmin;
   height: 25vmin;
-  max-height: none;
 }
 
-.traffic-lights.circular.horizontal .light {
-  width: 25vmin;
-  height: 25vmin;
-  max-width: none;
+.traffic-lights.circular[data-count="5"] .light,
+.traffic-lights.circular[data-count="6"] .light {
+  width: 18vmin;
+  height: 18vmin;
+}
+
+.traffic-lights.circular[data-count="7"] .light,
+.traffic-lights.circular[data-count="8"] .light {
+  width: 14vmin;
+  height: 14vmin;
+}
+
+.traffic-lights.circular[data-count="9"] .light,
+.traffic-lights.circular[data-count="10"] .light {
+  width: 11vmin;
+  height: 11vmin;
 }
 
 .traffic-lights.circular.fullscreen .light.active {

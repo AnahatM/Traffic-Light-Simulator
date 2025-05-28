@@ -87,79 +87,83 @@ const SettingsPanel: React.FC<SettingsPanelProps> = (props) => {
         ⚙️
       </button>
       <div className={`settings ${collapsed ? "collapsed" : ""}`}>
-        <div className="loop-panel" ref={loopPanelRef}>
-          <LoopPanel
-            colorOrder={formValues.colorOrder}
-            colors={formValues.colors}
-            times={formValues.times}
-            enabled={formValues.enabled}
-            updateTime={(color, value) =>
-              setFormValues((f) => ({
+        <LoopPanel
+          colorOrder={formValues.colorOrder}
+          colors={formValues.colors}
+          times={formValues.times}
+          enabled={formValues.enabled}
+          updateTime={(color, value) =>
+            setFormValues((f) => ({
+              ...f,
+              times: { ...f.times, [color]: value },
+            }))
+          }
+          updateColor={(color, value) =>
+            setFormValues((f) => ({
+              ...f,
+              colors: { ...f.colors, [color]: value },
+            }))
+          }
+          updateEnabled={(color, value) =>
+            setFormValues((f) => ({
+              ...f,
+              enabled: { ...f.enabled, [color]: value },
+            }))
+          }
+          moveColor={(index, direction) => {
+            setFormValues((f) => {
+              const arr = [...f.colorOrder];
+              const newIndex = index + direction;
+              if (newIndex < 0 || newIndex >= arr.length) return f;
+              [arr[index], arr[newIndex]] = [arr[newIndex], arr[index]];
+              return { ...f, colorOrder: arr };
+            });
+          }}
+          handleDragStart={setDraggedIdx}
+          handleDragOver={(idx, e) => {
+            e.preventDefault();
+            if (draggedIdx === null || draggedIdx === idx) return;
+            setFormValues((f) => {
+              const arr = [...f.colorOrder];
+              const [removed] = arr.splice(draggedIdx, 1);
+              arr.splice(idx, 0, removed);
+              return { ...f, colorOrder: arr };
+            });
+            setDraggedIdx(idx);
+          }}
+          handleDragEnd={() => setDraggedIdx(null)}
+          draggedIdx={draggedIdx}
+          deleteColor={(color) => {
+            setFormValues((f) => {
+              const { [color]: _, ...restColors } = f.colors;
+              const { [color]: __, ...restTimes } = f.times;
+              const { [color]: ___, ...restEnabled } = f.enabled;
+              return {
                 ...f,
-                times: { ...f.times, [color]: value },
-              }))
+                colors: restColors,
+                times: restTimes,
+                enabled: restEnabled,
+                colorOrder: f.colorOrder.filter((c) => c !== color),
+              };
+            });
+          }}
+          addNewColor={() => {
+            // Find next available custom color name
+            let idx = 1;
+            let newColor = `custom${idx}`;
+            while (formValues.colorOrder.includes(newColor)) {
+              idx++;
+              newColor = `custom${idx}`;
             }
-            updateColor={(color, value) =>
-              setFormValues((f) => ({
-                ...f,
-                colors: { ...f.colors, [color]: value },
-              }))
-            }
-            updateEnabled={(color, value) =>
-              setFormValues((f) => ({
-                ...f,
-                enabled: { ...f.enabled, [color]: value },
-              }))
-            }
-            moveColor={(index, direction) => {
-              setFormValues((f) => {
-                const arr = [...f.colorOrder];
-                const newIndex = index + direction;
-                if (newIndex < 0 || newIndex >= arr.length) return f;
-                [arr[index], arr[newIndex]] = [arr[newIndex], arr[index]];
-                return { ...f, colorOrder: arr };
-              });
-            }}
-            handleDragStart={setDraggedIdx}
-            handleDragOver={(idx, e) => {
-              e.preventDefault();
-              if (draggedIdx === null || draggedIdx === idx) return;
-              setFormValues((f) => {
-                const arr = [...f.colorOrder];
-                const [removed] = arr.splice(draggedIdx, 1);
-                arr.splice(idx, 0, removed);
-                return { ...f, colorOrder: arr };
-              });
-              setDraggedIdx(idx);
-            }}
-            handleDragEnd={() => setDraggedIdx(null)}
-            draggedIdx={draggedIdx}
-            deleteColor={(color) => {
-              setFormValues((f) => {
-                const { [color]: _, ...restColors } = f.colors;
-                const { [color]: __, ...restTimes } = f.times;
-                const { [color]: ___, ...restEnabled } = f.enabled;
-                return {
-                  ...f,
-                  colors: restColors,
-                  times: restTimes,
-                  enabled: restEnabled,
-                  colorOrder: f.colorOrder.filter((c) => c !== color),
-                };
-              });
-            }}
-            addNewColor={() => {
-              const newColor = `custom${Date.now()}`;
-              setFormValues((f) => ({
-                ...f,
-                colors: { ...f.colors, [newColor]: "#888888" },
-                times: { ...f.times, [newColor]: 1 },
-                enabled: { ...f.enabled, [newColor]: true },
-                colorOrder: [...f.colorOrder, newColor],
-              }));
-            }}
-          />
-        </div>
+            setFormValues((f) => ({
+              ...f,
+              colors: { ...f.colors, [newColor]: "#888888" },
+              times: { ...f.times, [newColor]: 1 },
+              enabled: { ...f.enabled, [newColor]: true },
+              colorOrder: [...f.colorOrder, newColor],
+            }));
+          }}
+        />
         <SettingsPanelSelects
           formValues={formValues}
           setFormValues={setFormValues}
@@ -192,21 +196,42 @@ const SettingsPanel: React.FC<SettingsPanelProps> = (props) => {
             props.setLoopMode(formValues.loopMode);
           }}
           resetSettings={() => {
+            // Only restore red, yellow, green, and their default colors/layouts
             setFormValues({
-              times: { ...props.times },
-              enabled: { ...props.enabled },
-              hideDisabled: props.hideDisabled,
-              direction: props.direction,
-              displayLayout: props.displayLayout,
-              enableClickingLights: props.enableClickingLights ?? true,
-              randomizeTimes: props.randomizeTimes ?? false,
-              randomRange: props.randomRange || { min: 0.5, max: 5 },
-              fullscreen: props.fullscreen ?? false,
-              enableShading: props.enableShading ?? true,
-              colors: { ...props.customColors },
-              colorOrder: [...props.colorOrder],
-              loopMode: props.loopMode,
+              times: { red: 1, yellow: 1, green: 1 },
+              enabled: { red: true, yellow: true, green: true },
+              hideDisabled: false,
+              direction: "vertical",
+              displayLayout: "rectangular",
+              enableClickingLights: true,
+              randomizeTimes: false,
+              randomRange: { min: 0.5, max: 5 },
+              fullscreen: false,
+              enableShading: true,
+              colors: { red: "#d32f2f", yellow: "#fbc02d", green: "#43a047" },
+              colorOrder: ["red", "yellow", "green"],
+              loopMode: "cycle",
             });
+            // Also update parent state to match
+            props.setTimes({ red: 1, yellow: 1, green: 1 });
+            props.setEnabled({ red: true, yellow: true, green: true });
+            props.setHideDisabled(false);
+            props.setDirection("vertical");
+            props.setDisplayLayout("rectangular");
+            if (props.setEnableClickingLights)
+              props.setEnableClickingLights(true);
+            if (props.setRandomizeTimes) props.setRandomizeTimes(false);
+            if (props.setRandomRange)
+              props.setRandomRange({ min: 0.5, max: 5 });
+            if (props.setFullscreen) props.setFullscreen(false);
+            if (props.setEnableShading) props.setEnableShading(true);
+            props.setCustomColors({
+              red: "#d32f2f",
+              yellow: "#fbc02d",
+              green: "#43a047",
+            });
+            props.setColorOrder(["red", "yellow", "green"]);
+            props.setLoopMode("cycle");
           }}
         />
         <div className="settings-footer">

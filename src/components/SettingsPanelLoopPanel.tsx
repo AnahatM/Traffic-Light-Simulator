@@ -25,49 +25,64 @@ const colorLabels: Record<string, string> = {
   yellow2: "Yellow",
 };
 
-const LoopPanel: React.FC<LoopPanelProps> = ({
-  colorOrder,
-  colors,
-  times,
-  enabled,
-  updateTime,
-  updateColor,
-  updateEnabled,
-  moveColor,
-  handleDragStart,
-  handleDragOver,
-  handleDragEnd,
-  draggedIdx,
-  deleteColor,
-  addNewColor,
-}) => (
-  <div className="loop-panel" style={{ position: "relative" }}>
-    {colorOrder.map((color, idx) => (
-      <ColorRow
-        key={color}
-        color={color}
-        label={colorLabels[color] || color}
-        value={times[color]}
-        enabled={enabled[color]}
-        colorValue={colors[color]}
-        onTimeChange={(v) => updateTime(color, v)}
-        onColorChange={(v) => updateColor(color, v)}
-        onEnabledChange={(v) => updateEnabled(color, v)}
-        onMoveUp={() => moveColor(idx, -1)}
-        onMoveDown={() => moveColor(idx, 1)}
-        canMoveUp={idx !== 0}
-        canMoveDown={idx !== colorOrder.length - 1}
-        onDelete={() => deleteColor(color)}
-        dragging={draggedIdx === idx}
-        onDragStart={() => handleDragStart(idx)}
-        onDragOver={(e) => handleDragOver(idx, e)}
-        onDragEnd={handleDragEnd}
-      />
-    ))}
-    <button className="add-color-btn" onClick={addNewColor}>
-      + New Color
-    </button>
-  </div>
+const getColorLabel = (color: string, idx: number): string => {
+  if (colorLabels[color]) return colorLabels[color];
+  if (color.startsWith("custom")) {
+    // Try to extract a number, otherwise use idx+1
+    const match = color.match(/custom(\d+)/);
+    return `Custom ${match ? parseInt(match[1], 10) : idx + 1}`;
+  }
+  return color;
+};
+
+const LoopPanel = React.forwardRef<HTMLDivElement, LoopPanelProps>(
+  (
+    {
+      colorOrder,
+      colors,
+      times,
+      enabled,
+      updateTime,
+      updateColor,
+      updateEnabled,
+      moveColor,
+      handleDragStart,
+      handleDragOver,
+      handleDragEnd,
+      draggedIdx,
+      deleteColor,
+      addNewColor,
+    },
+    ref
+  ) => (
+    <div className="loop-panel" style={{ position: "relative" }} ref={ref}>
+      {colorOrder.map((color, idx) => (
+        <ColorRow
+          key={color}
+          color={color}
+          label={getColorLabel(color, idx)}
+          value={times[color]}
+          enabled={enabled[color]}
+          colorValue={colors[color]}
+          onTimeChange={(v) => updateTime(color, v)}
+          onColorChange={(v) => updateColor(color, v)}
+          onEnabledChange={(v) => updateEnabled(color, v)}
+          onMoveUp={() => moveColor(idx, -1)}
+          onMoveDown={() => moveColor(idx, 1)}
+          canMoveUp={idx !== 0}
+          canMoveDown={idx !== colorOrder.length - 1}
+          onDelete={() => deleteColor(color)}
+          dragging={draggedIdx === idx}
+          onDragStart={() => handleDragStart(idx)}
+          onDragOver={(e) => handleDragOver(idx, e)}
+          onDragEnd={handleDragEnd}
+        />
+      ))}
+      <button className="add-color-btn" onClick={addNewColor}>
+        + New Color
+      </button>
+    </div>
+  )
 );
 
 export default LoopPanel;
