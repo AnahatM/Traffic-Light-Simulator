@@ -46,7 +46,9 @@ function App() {
     green: "#43a047",
   });
   // Loop mode state
-  const [loopMode, setLoopMode] = useState<"cycle" | "pingpong">("pingpong");
+  const [loopMode, setLoopMode] = useState<"cycle" | "pingpong" | "random">(
+    "pingpong"
+  );
 
   // Update CSS variables so TrafficLight and shading update automatically
   useEffect(() => {

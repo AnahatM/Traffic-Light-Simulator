@@ -66,7 +66,6 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
       return { nextColor: colorOrder[0], nextDirection: true };
     }
     if (loopMode === "random") {
-      // If queue is empty or currentColor not in queue, reshuffle
       let queue = randomQueue.length > 0 ? randomQueue : shuffle(visibleLights);
       // Remove currentColor if it's at the front
       if (queue[0] === currentColor) queue.shift();
@@ -231,7 +230,7 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
                   : "block",
               background:
                 !isKnown && activeColor === color
-                  ? customColors?.[color] || "#888888"
+                  ? customColors?.[color] || "var(--settings-panel-bg, #888888)"
                   : undefined,
             }}
             onClick={() => handleLightClick(color)}

@@ -49,7 +49,7 @@ const LoopPanel: React.FC<LoopPanelProps> = ({
         label={colorLabels[color] || color}
         value={times[color]}
         enabled={enabled[color]}
-        colorValue={colors[color] || "#888888"}
+        colorValue={colors[color]}
         onTimeChange={(v) => updateTime(color, v)}
         onColorChange={(v) => updateColor(color, v)}
         onEnabledChange={(v) => updateEnabled(color, v)}
