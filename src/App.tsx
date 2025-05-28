@@ -79,6 +79,7 @@ function App() {
         enableShading={enableShading}
         colorOrder={colorOrder}
         loopMode={loopMode}
+        customColors={customColors}
       />
       <SettingsPanel
         times={times}

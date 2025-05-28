@@ -22,6 +22,7 @@ interface TrafficLightProps {
   enableShading?: boolean;
   colorOrder: string[];
   loopMode?: "cycle" | "pingpong";
+  customColors?: Record<string, string>;
 }
 
 const TrafficLight: React.FC<TrafficLightProps> = ({
@@ -37,6 +38,7 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
   enableShading = true,
   colorOrder,
   loopMode = "pingpong",
+  customColors = {},
 }) => {
   const [activeColor, setActiveColor] = useState<string>(colorOrder[0]);
   const [, setCurrentTimes] = useState<LightTiming>({ ...times });
@@ -176,24 +178,33 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
         fullscreen ? "fullscreen" : ""
       } ${enableShading ? "shaded" : ""} ${displayLayout}`}
     >
-      {colorOrder.map((color) => (
-        <div
-          key={color}
-          className={`light ${color === "yellow2" ? "yellow" : color} ${
-            activeColor === color ? "active" : "inactive"
-          } ${enableClickingLights ? "clickable" : ""} ${
-            enableShading ? "shaded" : ""
-          }`}
-          style={{
-            display:
-              (fullscreen && activeColor !== color) ||
-              (!enabled[color] && hideDisabled)
-                ? "none"
-                : "block",
-          }}
-          onClick={() => handleLightClick(color)}
-        />
-      ))}
+      {colorOrder.map((color) => {
+        // Determine if this is a known color for class styling
+        const isKnown = ["red", "yellow", "green", "yellow2"].includes(color);
+        const colorClass = color === "yellow2" ? "yellow" : color;
+        return (
+          <div
+            key={color}
+            className={`light ${isKnown ? colorClass : "custom"} ${
+              activeColor === color ? "active" : "inactive"
+            } ${enableClickingLights ? "clickable" : ""} ${
+              enableShading ? "shaded" : ""
+            }`}
+            style={{
+              display:
+                (fullscreen && activeColor !== color) ||
+                (!enabled[color] && hideDisabled)
+                  ? "none"
+                  : "block",
+              background:
+                !isKnown && activeColor === color
+                  ? customColors?.[color] || "#888888"
+                  : undefined,
+            }}
+            onClick={() => handleLightClick(color)}
+          />
+        );
+      })}
     </div>
   );
 };

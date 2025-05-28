@@ -5,6 +5,7 @@ import SettingCheckbox from "./SettingCheckbox.tsx";
 import SettingSelect from "./SettingSelect.tsx";
 import ColorPicker from "./ColorPicker";
 import type { LightState, LightTiming } from "./TrafficLight";
+import LoopPanel from "./SettingsPanelLoopPanel.tsx";
 
 interface SettingsPanelProps {
   times: LightTiming;
@@ -156,7 +157,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
   const handleDragEnd = () => setDraggedIdx(null);
 
   // Add new color logic
-  const addNewColor = () => {
+  const addNewColor = (): void => {
     // Generate a unique color key
     let i = 1;
     let newKey = `custom${i}`;
@@ -242,7 +243,8 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
     }
     setCustomColors(defaultSettings.colors);
     setColorOrder(defaultSettings.colorOrder);
-    setLoopMode("cycle");
+    setLoopMode("pingpong");
+    setLoopModeLocal("pingpong");
   };
 
   return (
@@ -251,84 +253,36 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
         ⚙️
       </button>
       <div className={`settings ${collapsed ? "collapsed" : ""}`}>
-        <div className="loop-panel" ref={loopPanelRef}>
-          {formValues.colorOrder.map((color, idx) => (
-            <div
-              key={color}
-              className={`color-row-panel${
-                draggedIdx === idx ? " dragging" : ""
-              }`}
-              draggable
-              onDragStart={() => handleDragStart(idx)}
-              onDragOver={(e) => handleDragOver(idx, e)}
-              onDragEnd={handleDragEnd}
-              onDrop={handleDragEnd}
-            >
-              <div className="color-row-arrows">
-                <button
-                  className="arrow-btn"
-                  disabled={idx === 0}
-                  onClick={() => moveColor(idx, -1)}
-                  title="Move up"
-                  tabIndex={-1}
-                >
-                  <svg width="18" height="18" viewBox="0 0 18 18">
-                    <polyline
-                      points="4,11 9,6 14,11"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </button>
-                <button
-                  className="arrow-btn"
-                  disabled={idx === formValues.colorOrder.length - 1}
-                  onClick={() => moveColor(idx, 1)}
-                  title="Move down"
-                  tabIndex={-1}
-                >
-                  <svg width="18" height="18" viewBox="0 0 18 18">
-                    <polyline
-                      points="4,7 9,12 14,7"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div style={{ flex: 1 }}>
-                <SettingInput
-                  label={colorLabels[color] || color}
-                  value={formValues.times[color]}
-                  min={0.2}
-                  step={0.1}
-                  onChange={(value) =>
-                    updateTime(color as keyof typeof formValues.times, value)
-                  }
-                >
-                  <ColorPicker
-                    color={formValues.colors[color] || "#888888"}
-                    onChange={(c) => updateColor(String(color), c)}
-                  />
-                  <SettingCheckbox
-                    label={`Enable ${colorLabels[color] || color}`}
-                    checked={formValues.enabled[color]}
-                    onChange={(checked) =>
-                      updateEnabled(String(color), checked)
-                    }
-                  />
-                </SettingInput>
-              </div>
-            </div>
-          ))}
-          <button className="add-color-btn" onClick={addNewColor}>
-            + New Color
-          </button>
-        </div>
+        <LoopPanel
+          colorOrder={formValues.colorOrder}
+          colors={formValues.colors}
+          times={formValues.times}
+          enabled={formValues.enabled}
+          updateTime={updateTime}
+          updateColor={updateColor}
+          updateEnabled={updateEnabled}
+          moveColor={moveColor}
+          handleDragStart={handleDragStart}
+          handleDragOver={handleDragOver}
+          handleDragEnd={handleDragEnd}
+          draggedIdx={draggedIdx}
+          deleteColor={(color: string) => {
+            setFormValues((prev) => {
+              const newOrder = prev.colorOrder.filter((c) => c !== color);
+              const { [color]: _, ...newColors } = prev.colors;
+              const { [color]: __, ...newTimes } = prev.times;
+              const { [color]: ___, ...newEnabled } = prev.enabled;
+              return {
+                ...prev,
+                colorOrder: newOrder,
+                colors: newColors,
+                times: newTimes,
+                enabled: newEnabled,
+              };
+            });
+          }}
+          addNewColor={addNewColor}
+        />
         <SettingSelect
           label="Loop Mode"
           value={loopModeLocal}

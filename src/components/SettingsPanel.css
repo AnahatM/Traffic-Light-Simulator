@@ -227,6 +227,12 @@
   background: var(--color-panel);
 }
 
+.color-row-delete {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+}
+
 @media (max-width: 500px) {
   .settings {
     min-width: 0;
