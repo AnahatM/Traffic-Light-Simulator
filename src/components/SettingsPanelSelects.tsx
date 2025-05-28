@@ -54,6 +54,47 @@ const SettingsPanelSelects: React.FC<SettingsPanelSelectsProps> = ({
         setDisplayLayout(value as "rectangular" | "circular");
       }}
     />
+    {/* Show min/max random time controls if randomizeTimes is checked */}
+    {formValues.randomizeTimes && (
+      <div className="random-range-controls">
+        <label>
+          Min Time (s):
+          <input
+            type="number"
+            min={0.1}
+            step={0.1}
+            value={formValues.randomRange.min}
+            onChange={(e) =>
+              setFormValues((f: any) => ({
+                ...f,
+                randomRange: {
+                  ...f.randomRange,
+                  min: parseFloat(e.target.value),
+                },
+              }))
+            }
+          />
+        </label>
+        <label>
+          Max Time (s):
+          <input
+            type="number"
+            min={formValues.randomRange.min}
+            step={0.1}
+            value={formValues.randomRange.max}
+            onChange={(e) =>
+              setFormValues((f: any) => ({
+                ...f,
+                randomRange: {
+                  ...f.randomRange,
+                  max: parseFloat(e.target.value),
+                },
+              }))
+            }
+          />
+        </label>
+      </div>
+    )}
   </>
 );
 
