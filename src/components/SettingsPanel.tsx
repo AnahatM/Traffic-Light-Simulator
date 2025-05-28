@@ -94,13 +94,22 @@ const SettingsPanel: React.FC<SettingsPanelProps> = (props) => {
             times={formValues.times}
             enabled={formValues.enabled}
             updateTime={(color, value) =>
-              setFormValues((f) => ({ ...f, times: { ...f.times, [color]: value } }))
+              setFormValues((f) => ({
+                ...f,
+                times: { ...f.times, [color]: value },
+              }))
             }
             updateColor={(color, value) =>
-              setFormValues((f) => ({ ...f, colors: { ...f.colors, [color]: value } }))
+              setFormValues((f) => ({
+                ...f,
+                colors: { ...f.colors, [color]: value },
+              }))
             }
             updateEnabled={(color, value) =>
-              setFormValues((f) => ({ ...f, enabled: { ...f.enabled, [color]: value } }))
+              setFormValues((f) => ({
+                ...f,
+                enabled: { ...f.enabled, [color]: value },
+              }))
             }
             moveColor={(index, direction) => {
               setFormValues((f) => {
