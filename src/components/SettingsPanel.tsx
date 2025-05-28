@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "./SettingsPanel.css";
 import SettingInput from "./SettingInput.tsx";
 import SettingCheckbox from "./SettingCheckbox.tsx";
@@ -27,13 +27,20 @@ interface SettingsPanelProps {
   setFullscreen?: (enable: boolean) => void;
   enableShading?: boolean;
   setEnableShading?: (enable: boolean) => void;
-  customColors: { red: string; yellow: string; green: string };
-  setCustomColors: (colors: {
-    red: string;
-    yellow: string;
-    green: string;
-  }) => void;
+  customColors: Record<string, string>;
+  setCustomColors: (colors: Record<string, string>) => void;
+  colorOrder: string[];
+  setColorOrder: (order: string[]) => void;
+  loopMode: "cycle" | "pingpong";
+  setLoopMode: (mode: "cycle" | "pingpong") => void;
 }
+
+const colorLabels: Record<string, string> = {
+  red: "Red",
+  yellow: "Yellow",
+  green: "Green",
+  yellow2: "Yellow",
+};
 
 const SettingsPanel: React.FC<SettingsPanelProps> = ({
   times,
@@ -58,8 +65,14 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
   setEnableShading,
   customColors,
   setCustomColors,
+  colorOrder,
+  setColorOrder,
+  loopMode,
+  setLoopMode,
 }) => {
   const [collapsed, setCollapsed] = useState(true);
+  const [draggedIdx, setDraggedIdx] = useState<number | null>(null);
+  const loopPanelRef = useRef<HTMLDivElement>(null);
 
   // Local state to track form values (including colors)
   const [formValues, setFormValues] = useState({
@@ -75,7 +88,12 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
     fullscreen: fullscreen !== undefined ? fullscreen : false,
     enableShading: enableShading !== undefined ? enableShading : true,
     colors: { ...customColors },
+    colorOrder: [...colorOrder],
   });
+
+  const [loopModeLocal, setLoopModeLocal] = useState<"cycle" | "pingpong">(
+    loopMode
+  );
 
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
@@ -111,6 +129,50 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
     }));
   };
 
+  // Reorder colorOrder array
+  const moveColor = (index: number, direction: -1 | 1) => {
+    setFormValues((prev) => {
+      const arr = [...prev.colorOrder];
+      const newIndex = index + direction;
+      if (newIndex < 0 || newIndex >= arr.length) return prev;
+      [arr[index], arr[newIndex]] = [arr[newIndex], arr[index]];
+      return { ...prev, colorOrder: arr };
+    });
+  };
+
+  // Drag and drop handlers
+  const handleDragStart = (idx: number) => setDraggedIdx(idx);
+  const handleDragOver = (idx: number, e: React.DragEvent) => {
+    e.preventDefault();
+    if (draggedIdx === null || draggedIdx === idx) return;
+    setFormValues((prev) => {
+      const arr = [...prev.colorOrder];
+      const [removed] = arr.splice(draggedIdx, 1);
+      arr.splice(idx, 0, removed);
+      return { ...prev, colorOrder: arr };
+    });
+    setDraggedIdx(idx);
+  };
+  const handleDragEnd = () => setDraggedIdx(null);
+
+  // Add new color logic
+  const addNewColor = () => {
+    // Generate a unique color key
+    let i = 1;
+    let newKey = `custom${i}`;
+    while (formValues.colors[newKey]) {
+      i++;
+      newKey = `custom${i}`;
+    }
+    setFormValues((prev) => ({
+      ...prev,
+      times: { ...prev.times, [newKey]: 1 },
+      enabled: { ...prev.enabled, [newKey]: true },
+      colors: { ...prev.colors, [newKey]: "#888888" },
+      colorOrder: [...prev.colorOrder, newKey],
+    }));
+  };
+
   const applySettings = () => {
     setTimes(formValues.times);
     setEnabled(formValues.enabled);
@@ -132,7 +194,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
     if (setEnableShading) {
       setEnableShading(formValues.enableShading);
     }
+    // Propagate all custom colors to parent
     setCustomColors(formValues.colors);
+    setColorOrder(formValues.colorOrder);
+    setLoopMode(loopModeLocal);
   };
 
   const resetSettings = () => {
@@ -152,6 +217,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
         yellow: "#fbc02d",
         green: "#43a047",
       },
+      colorOrder: ["red", "yellow", "green"],
     };
     setFormValues(defaultSettings);
     setTimes(defaultSettings.times);
@@ -175,6 +241,8 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
       setEnableShading(defaultSettings.enableShading);
     }
     setCustomColors(defaultSettings.colors);
+    setColorOrder(defaultSettings.colorOrder);
+    setLoopMode("cycle");
   };
 
   return (
@@ -183,57 +251,93 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
         ⚙️
       </button>
       <div className={`settings ${collapsed ? "collapsed" : ""}`}>
-        <SettingInput
-          label="Red"
-          value={formValues.times.red}
-          min={0.2}
-          step={0.1}
-          onChange={(value) => updateTime("red", value)}
-        >
-          <ColorPicker
-            color={formValues.colors.red}
-            onChange={(color) => updateColor("red", color)}
-          />
-          <SettingCheckbox
-            label="Enable Red"
-            checked={formValues.enabled.red}
-            onChange={(checked) => updateEnabled("red", checked)}
-          />
-        </SettingInput>
-        <SettingInput
-          label="Yellow"
-          value={formValues.times.yellow}
-          min={0.2}
-          step={0.1}
-          onChange={(value) => updateTime("yellow", value)}
-        >
-          <ColorPicker
-            color={formValues.colors.yellow}
-            onChange={(color) => updateColor("yellow", color)}
-          />
-          <SettingCheckbox
-            label="Enable Yellow"
-            checked={formValues.enabled.yellow}
-            onChange={(checked) => updateEnabled("yellow", checked)}
-          />
-        </SettingInput>
-        <SettingInput
-          label="Green"
-          value={formValues.times.green}
-          min={0.2}
-          step={0.1}
-          onChange={(value) => updateTime("green", value)}
-        >
-          <ColorPicker
-            color={formValues.colors.green}
-            onChange={(color) => updateColor("green", color)}
-          />
-          <SettingCheckbox
-            label="Enable Green"
-            checked={formValues.enabled.green}
-            onChange={(checked) => updateEnabled("green", checked)}
-          />
-        </SettingInput>
+        <div className="loop-panel" ref={loopPanelRef}>
+          {formValues.colorOrder.map((color, idx) => (
+            <div
+              key={color}
+              className={`color-row-panel${
+                draggedIdx === idx ? " dragging" : ""
+              }`}
+              draggable
+              onDragStart={() => handleDragStart(idx)}
+              onDragOver={(e) => handleDragOver(idx, e)}
+              onDragEnd={handleDragEnd}
+              onDrop={handleDragEnd}
+            >
+              <div className="color-row-arrows">
+                <button
+                  className="arrow-btn"
+                  disabled={idx === 0}
+                  onClick={() => moveColor(idx, -1)}
+                  title="Move up"
+                  tabIndex={-1}
+                >
+                  <svg width="18" height="18" viewBox="0 0 18 18">
+                    <polyline
+                      points="4,11 9,6 14,11"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </button>
+                <button
+                  className="arrow-btn"
+                  disabled={idx === formValues.colorOrder.length - 1}
+                  onClick={() => moveColor(idx, 1)}
+                  title="Move down"
+                  tabIndex={-1}
+                >
+                  <svg width="18" height="18" viewBox="0 0 18 18">
+                    <polyline
+                      points="4,7 9,12 14,7"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div style={{ flex: 1 }}>
+                <SettingInput
+                  label={colorLabels[color] || color}
+                  value={formValues.times[color]}
+                  min={0.2}
+                  step={0.1}
+                  onChange={(value) =>
+                    updateTime(color as keyof typeof formValues.times, value)
+                  }
+                >
+                  <ColorPicker
+                    color={formValues.colors[color] || "#888888"}
+                    onChange={(c) => updateColor(String(color), c)}
+                  />
+                  <SettingCheckbox
+                    label={`Enable ${colorLabels[color] || color}`}
+                    checked={formValues.enabled[color]}
+                    onChange={(checked) =>
+                      updateEnabled(String(color), checked)
+                    }
+                  />
+                </SettingInput>
+              </div>
+            </div>
+          ))}
+          <button className="add-color-btn" onClick={addNewColor}>
+            + New Color
+          </button>
+        </div>
+        <SettingSelect
+          label="Loop Mode"
+          value={loopModeLocal}
+          options={[
+            { value: "cycle", label: "Cycle (Repeat)" },
+            { value: "pingpong", label: "Bounce (Back & Forth)" },
+          ]}
+          onChange={(value) => setLoopModeLocal(value as "cycle" | "pingpong")}
+        />
         <div className="setting-checkbox-group">
           <SettingCheckbox
             label="Hide disabled lights"
@@ -386,3 +490,5 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
 };
 
 export default SettingsPanel;
+
+// TODO: Implement bounce (pingpong) mode logic in TrafficLight component
