@@ -29,11 +29,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5vmin;
-  padding: 2vmin;
-  flex-wrap: wrap;
-  max-width: 90vw;
-  max-height: 90vh;
+  flex-wrap: nowrap;
+  width: 100vw;
+  height: 100vh;
+  gap: 3vw;
 }
 
 .traffic-lights.circular.vertical {
@@ -45,38 +44,28 @@
 }
 
 .traffic-lights.circular .light {
-  flex: 0 0 auto;
+  aspect-ratio: 1/1;
   border-radius: 50%;
-  aspect-ratio: 1/1 !important;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  border: 2px solid var(--color-border);
-  width: 25vmin;
-  height: 25vmin;
+  flex: 0 1 auto;
+  max-width: calc(90vw / var(--circle-count, 3));
+  max-height: calc(90vh / var(--circle-count, 3));
+  min-width: 60px;
+  min-height: 60px;
+  width: min(22vw, 22vh);
+  height: min(22vw, 22vh);
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 
-.traffic-lights.circular[data-count="5"] .light,
-.traffic-lights.circular[data-count="6"] .light {
-  width: 18vmin;
-  height: 18vmin;
+.traffic-lights.circular.vertical .light {
+  width: min(22vw, 22vh);
+  height: min(22vw, 22vh);
 }
-
-.traffic-lights.circular[data-count="7"] .light,
-.traffic-lights.circular[data-count="8"] .light {
-  width: 14vmin;
-  height: 14vmin;
-}
-
-.traffic-lights.circular[data-count="9"] .light,
-.traffic-lights.circular[data-count="10"] .light {
-  width: 11vmin;
-  height: 11vmin;
-}
-
-.traffic-lights.circular.fullscreen .light.active {
-  width: 90vmin;
-  height: 90vmin;
-  max-width: 90vmin;
-  max-height: 90vmin;
+.traffic-lights.circular.horizontal .light {
+  width: min(22vw, 22vh);
+  height: min(22vw, 22vh);
 }
 
 /* Remove borders in circular layout */

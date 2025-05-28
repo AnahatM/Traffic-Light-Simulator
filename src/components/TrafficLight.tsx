@@ -209,6 +209,14 @@ const TrafficLight: React.FC<TrafficLightProps> = ({
       className={`traffic-lights ${direction} ${
         fullscreen ? "fullscreen" : ""
       } ${enableShading ? "shaded" : ""} ${displayLayout}`}
+      {...(displayLayout === "circular"
+        ? {
+            style: {
+              ...(customColors ? { ...customColors } : {}),
+              ["--circle-count" as any]: colorOrder.length,
+            },
+          }
+        : {})}
       data-count={colorOrder.length}
     >
       {colorOrder.map((color) => {

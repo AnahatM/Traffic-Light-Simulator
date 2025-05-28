@@ -148,7 +148,7 @@
 }
 
 .settings-footer a {
-  color: var(--color-white);
+  color: var(--settings-panel-footer-link, var(--color-white));
   opacity: 0.7;
   text-decoration: none;
   transition: opacity 0.2s;
@@ -160,7 +160,7 @@
 }
 
 .loop-panel {
-  background: rgba(255, 255, 255, 0.07);
+  background: var(--settings-panel-loop-bg, var(--color-panel));
   padding: 10px 8px;
   border-radius: 12px;
   margin-bottom: 18px;
@@ -169,7 +169,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  box-shadow: 0 2px 8px #0002;
+  box-shadow: 0 2px 8px var(--settings-panel-shadow, #0002);
   position: relative;
 }
 
@@ -181,7 +181,11 @@
   bottom: 0;
   height: 32px;
   pointer-events: none;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  background: linear-gradient(
+    to top,
+    var(--settings-panel-loop-gradient, #181c22e6) 80%,
+    transparent
+  );
   border-radius: 0 0 12px 12px;
   z-index: 2;
 }
@@ -190,7 +194,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--settings-panel-row-bg, rgba(0, 0, 0, 0.1));
   border-radius: 10px;
   padding: 4px 8px; /* reduced vertical padding */
   box-shadow: 0 1px 4px #0001;
@@ -201,8 +205,8 @@
 
 .color-row-panel.dragging {
   opacity: 0.7;
-  background: rgba(0, 0, 0, 0.18);
-  box-shadow: 0 4px 16px #0003;
+  background: var(--settings-panel-row-drag, rgba(0, 0, 0, 0.18));
+  box-shadow: 0 4px 16px var(--settings-panel-shadow, #0003);
 }
 
 .color-row-arrows {
@@ -236,8 +240,8 @@
 }
 
 .arrow-btn:hover:not(:disabled) {
-  background: rgba(30, 136, 229, 0.18); /* blue accent hover */
-  color: #42a5f5;
+  background: var(--settings-panel-arrow-hover, rgba(30, 136, 229, 0.18));
+  color: var(--settings-panel-arrow-color, #42a5f5);
   box-shadow: none;
 }
 
@@ -247,8 +251,8 @@
   padding: 8px 0;
   border-radius: 8px;
   border: none;
-  background: var(--color-panel-hover);
-  color: var(--color-white);
+  background: var(--settings-panel-add-bg, var(--color-panel-hover));
+  color: var(--settings-panel-add-color, var(--color-white));
   font-size: 1em;
   font-weight: 500;
   cursor: pointer;
@@ -256,7 +260,7 @@
 }
 
 .add-color-btn:hover {
-  background: var(--color-panel);
+  background: var(--settings-panel-add-hover, var(--color-panel));
 }
 
 .color-row-delete {
@@ -271,23 +275,23 @@
 }
 
 .color-row-delete .arrow-btn:hover {
-  color: var(--settings-panel-delete-hover);
-  background: rgba(255, 0, 0, 0.08);
+  color: var(--settings-panel-delete-hover, #e57373);
+  background: var(--settings-panel-delete-bg, rgba(255, 0, 0, 0.08));
 }
 
 .color-row-delete-btn {
-  color: var(--settings-panel-delete-default);
+  color: var(--settings-panel-delete-default, var(--color-white));
   background: none;
   transition: color 0.18s, background 0.18s;
 }
 
 .color-row-delete-btn:hover {
-  color: var(--settings-panel-delete-hover);
-  background: rgba(255, 0, 0, 0.08);
+  color: var(--settings-panel-delete-hover, #e57373);
+  background: var(--settings-panel-delete-bg, rgba(255, 0, 0, 0.08));
 }
 
 .random-range-controls {
-  background: var(--settings-panel-bg);
+  background: var(--settings-panel-bg, var(--color-panel));
   border-radius: 16px;
   padding: 1.2em 1.5em 1.2em 1.5em;
   margin-bottom: 1.2em;
@@ -295,7 +299,7 @@
   display: flex;
   flex-direction: column;
   gap: 1em;
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px 0 var(--settings-panel-shadow, rgba(0, 0, 0, 0.1));
 }
 
 .random-range-controls label {
@@ -308,7 +312,7 @@
 
 .random-range-controls input[type="number"] {
   background: var(--settings-panel-input-bg, #181d1c);
-  color: var(--settings-panel-input, #fff);
+  color: var(--settings-panel-input, var(--color-white));
   border: none;
   border-radius: 8px;
   padding: 0.5em 1em;
