@@ -1,0 +1,21 @@
+/* ColorRow styles */
+@import "../index.css";
+
+.color-row-panel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--settings-panel-row-bg, rgba(0, 0, 0, 0.1));
+  border-radius: 10px;
+  padding: 4px 8px;
+  box-shadow: 0 1px 4px #0001;
+  transition: box-shadow 0.2s, background 0.2s;
+  cursor: grab;
+  min-height: 44px;
+}
+
+.color-row-panel.dragging {
+  opacity: 0.7;
+  background: var(--settings-panel-row-drag, rgba(0, 0, 0, 0.18));
+  box-shadow: 0 4px 16px #0003;
+}

@@ -1,0 +1,6 @@
+/* Selects styles */
+@import "../index.css";
+
+.setting-select {
+  margin-bottom: 1em;
+}

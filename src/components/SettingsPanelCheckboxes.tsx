@@ -1,5 +1,6 @@
 import React from "react";
 import SettingCheckbox from "./SettingCheckbox";
+import "./SettingsPanelCheckboxes.css";
 
 interface SettingsPanelCheckboxesProps {
   formValues: any;

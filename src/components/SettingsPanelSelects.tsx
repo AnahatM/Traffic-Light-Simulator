@@ -1,5 +1,6 @@
 import React from "react";
 import SettingSelect from "./SettingSelect";
+import "./SettingsPanelSelects.css";
 
 interface SettingsPanelSelectsProps {
   formValues: any;

@@ -4,7 +4,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  /* Colors */
+  /* Centralized color variables */
   --color-bg: #000;
   --color-panel: #181c22e6;
   --color-panel-blur: blur(10px);
@@ -19,10 +19,25 @@
   --color-panel-hover: #343a40;
   --color-shadow: 0 4px 24px #0007;
 
+  /* Settings panel specific */
+  --settings-panel-bg: var(--color-panel);
+  --settings-panel-hover: var(--color-panel-hover);
+  --settings-panel-border: var(--color-border);
+  --settings-panel-shadow: var(--color-shadow);
+  --settings-panel-white: var(--color-white);
+  --settings-panel-red: var(--color-red);
+  --settings-panel-yellow: var(--color-yellow);
+  --settings-panel-green: var(--color-green);
+  --settings-panel-delete-hover: #e57373;
+  --settings-panel-delete-default: var(--color-white);
+  --settings-panel-loop-bg: rgba(255, 255, 255, 0.07);
+  --settings-panel-loop-gradient: rgba(0, 0, 0, 0.8);
+  --settings-panel-row-bg: rgba(0, 0, 0, 0.1);
+  --settings-panel-row-drag: rgba(0, 0, 0, 0.18);
+
   color-scheme: dark;
   color: var(--color-white);
   background-color: var(--color-bg);
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -41,4 +56,6 @@ body {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  color: var(--color-white);
+  background: var(--color-bg);
 }

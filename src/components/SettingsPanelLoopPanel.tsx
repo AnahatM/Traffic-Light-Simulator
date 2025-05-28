@@ -1,5 +1,6 @@
 import React from "react";
 import ColorRow from "./SettingsPanelColorRow";
+import "./SettingsPanelLoopPanel.css";
 
 interface LoopPanelProps {
   colorOrder: string[];

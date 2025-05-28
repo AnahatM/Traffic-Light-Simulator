@@ -1,4 +1,5 @@
 import React from "react";
+import "./SettingsPanelButtons.css";
 
 interface SettingsPanelButtonsProps {
   applySettings: () => void;

@@ -2,6 +2,7 @@ import React from "react";
 import SettingInput from "./SettingInput";
 import SettingCheckbox from "./SettingCheckbox";
 import ColorPicker from "./ColorPicker";
+import "./SettingsPanelColorRow.css";
 
 interface ColorRowProps {
   color: string;
