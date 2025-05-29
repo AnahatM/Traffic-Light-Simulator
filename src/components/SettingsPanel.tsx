@@ -44,6 +44,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = (props) => {
   const [collapsed, setCollapsed] = useState(true);
   const [draggedIdx, setDraggedIdx] = useState<number | null>(null);
   const loopPanelRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Local state for form values
   const [formValues, setFormValues] = useState({
@@ -61,6 +62,38 @@ const SettingsPanel: React.FC<SettingsPanelProps> = (props) => {
     colorOrder: [...props.colorOrder],
     loopMode: props.loopMode,
   });
+
+  const presetConfigs = [
+    {
+      name: "Classic 3-Light",
+      json: {
+        times: { red: 1, yellow: 1, green: 1 },
+        enabled: { red: true, yellow: true, green: true },
+        colorOrder: ["red", "yellow", "green"],
+        colors: { red: "#d32f2f", yellow: "#fbc02d", green: "#43a047" },
+        loopMode: "cycle",
+        direction: "vertical",
+        displayLayout: "rectangular",
+      },
+    },
+    {
+      name: "4-Light (UK)",
+      json: {
+        times: { red: 1, yellow: 1, green: 1, yellow2: 1 },
+        enabled: { red: true, yellow: true, green: true, yellow2: true },
+        colorOrder: ["red", "yellow", "green", "yellow2"],
+        colors: {
+          red: "#d32f2f",
+          yellow: "#fbc02d",
+          green: "#43a047",
+          yellow2: "#fbc02d",
+        },
+        loopMode: "cycle",
+        direction: "vertical",
+        displayLayout: "rectangular",
+      },
+    },
+  ];
 
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
@@ -85,6 +118,45 @@ const SettingsPanel: React.FC<SettingsPanelProps> = (props) => {
       window.removeEventListener("resize", checkOverflow);
     };
   }, [formValues.colorOrder.length]);
+
+  const handleExport = () => {
+    const data = JSON.stringify(formValues, null, 2);
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "traffic-light-settings.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const json = JSON.parse(event.target?.result as string);
+        setFormValues((f) => ({ ...f, ...json }));
+      } catch {
+        alert("Invalid JSON file.");
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const handlePreset = (json: any) => {
+    setFormValues((f) => ({ ...f, ...json }));
+  };
+
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const handleThemeSwitch = () => {
+    setTheme((t) => (t === "dark" ? "light" : "dark"));
+    document.documentElement.setAttribute(
+      "data-theme",
+      theme === "dark" ? "light" : "dark"
+    );
+  };
 
   return (
     <div className="settings-collapsible">
@@ -286,6 +358,60 @@ const SettingsPanel: React.FC<SettingsPanelProps> = (props) => {
             props.setLoopMode("cycle");
           }}
         />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 8,
+            marginTop: 12,
+          }}
+        >
+          <div style={{ display: "flex", gap: 8 }}>
+            <button onClick={handleExport} className="settings-buttons">
+              Export JSON
+            </button>
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="settings-buttons"
+            >
+              Import JSON
+            </button>
+            <input
+              type="file"
+              accept="application/json"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleImport}
+            />
+          </div>
+          <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+            <select
+              onChange={(e) =>
+                handlePreset(presetConfigs[parseInt(e.target.value)].json)
+              }
+              style={{ flex: 1 }}
+            >
+              <option value="">Load Preset...</option>
+              {presetConfigs.map((preset, i) => (
+                <option value={i} key={preset.name}>
+                  {preset.name}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={() => handlePreset(presetConfigs[0].json)}
+              className="settings-buttons"
+            >
+              Default
+            </button>
+          </div>
+        </div>
+        <div className="settings-theme-switch">
+          <button
+            onClick={handleThemeSwitch}
+            className="settings-buttons"
+          >{`Switch to ${theme === "dark" ? "Light" : "Dark"} Theme`}</button>
+        </div>
         <div className="settings-footer">
           <a
             href="https://github.com/AnahatM/Traffic-Light-Simulator"

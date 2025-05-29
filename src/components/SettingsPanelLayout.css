@@ -34,8 +34,8 @@
   top: 0;
   box-shadow: var(--color-shadow);
   border-radius: 18px;
-  min-width: 340px;
-  max-width: 30vw;
+  min-width: 400px;
+  max-width: 600px;
   margin-left: 0;
   margin-right: 0;
   background: var(--color-panel);
@@ -78,17 +78,23 @@
   text-decoration: underline;
 }
 
-@media (max-width: 500px) {
+.settings-theme-switch {
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 600px) {
   .settings {
     min-width: 0;
-    width: 95vw;
-    max-width: 95vw;
-    font-size: 0.9em;
-    padding: 15px 5vw;
-    max-height: 90vh;
+    width: 98vw;
+    max-width: 98vw;
+    font-size: 0.95em;
+    padding: 12px 2vw;
+    max-height: 95vh;
   }
   .settings-collapsible {
-    left: 8px;
-    top: 8px;
+    left: 4px;
+    top: 4px;
   }
 }
