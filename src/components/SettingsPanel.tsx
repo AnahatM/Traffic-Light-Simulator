@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./SettingsPanelLayout.css";
 import "./SettingsPanelLoopPanel.css";
 import "./SettingsPanelColorRow.css";
@@ -150,13 +150,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = (props) => {
   };
 
   const [theme, setTheme] = useState<"dark" | "light">("dark");
-  const handleThemeSwitch = () => {
-    setTheme((t) => (t === "dark" ? "light" : "dark"));
-    document.documentElement.setAttribute(
-      "data-theme",
-      theme === "dark" ? "light" : "dark"
-    );
-  };
+  useEffect(() => {
+    document.body.setAttribute("data-theme", theme);
+  }, [theme]);
+  const handleThemeSwitch = () => setTheme(theme === "dark" ? "light" : "dark");
 
   return (
     <div className="settings-collapsible">
@@ -409,7 +406,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = (props) => {
         <div className="settings-theme-switch">
           <button
             onClick={handleThemeSwitch}
-            className="settings-buttons"
+            className="settings-panel-theme-btn"
           >{`Switch to ${theme === "dark" ? "Light" : "Dark"} Theme`}</button>
         </div>
         <div className="settings-footer">

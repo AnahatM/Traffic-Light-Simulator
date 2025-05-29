@@ -26,3 +26,55 @@
   --settings-panel-delete-bg: rgba(255, 0, 0, 0.08);
   --settings-panel-footer-link: var(--color-white);
 }
+
+.settings-panel {
+  padding: 2rem 2.5rem;
+}
+
+@media (max-width: 400px) {
+  .settings-panel {
+    padding: 1.2rem 0.7rem;
+  }
+}
+
+.settings-panel-btn,
+.settings-panel-btn-secondary,
+.settings-panel-theme-btn {
+  display: inline-block;
+  border-radius: 12px;
+  border: 1.5px solid var(--settings-panel-border);
+  background: var(--settings-panel-bg);
+  color: var(--settings-panel-white);
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5em 1.2em;
+  margin: 0.25em 0.5em 0.25em 0;
+  box-shadow: none;
+  transition: background 0.15s, color 0.15s, border 0.15s;
+  cursor: pointer;
+}
+.settings-panel-btn:hover,
+.settings-panel-btn-secondary:hover,
+.settings-panel-theme-btn:hover {
+  background: var(--settings-panel-hover);
+}
+.settings-panel-btn-secondary {
+  background: transparent;
+  border: 1.5px solid var(--settings-panel-border);
+  color: var(--settings-panel-white);
+}
+.settings-panel-theme-btn {
+  float: right;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  background: var(--settings-panel-bg);
+  border: 1.5px solid var(--settings-panel-border);
+  color: var(--settings-panel-white);
+}
+
+.settings-panel-btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-bottom: 0.5em;
+}

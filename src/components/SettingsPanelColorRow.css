@@ -100,3 +100,26 @@
   color: var(--settings-panel-delete-hover, #e57373);
   background: var(--settings-panel-delete-bg, rgba(255, 0, 0, 0.08));
 }
+
+@media (max-width: 400px) {
+  .settings-panel-color-row {
+    flex-direction: column;
+    min-height: 5.5em;
+    height: auto;
+    align-items: stretch;
+    padding-bottom: 0.5em;
+  }
+  .settings-panel-color-row-main {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+  }
+  .settings-panel-color-row-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1em;
+    margin-top: 0.3em;
+    width: 100%;
+  }
+}
