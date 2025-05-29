@@ -1,5 +1,5 @@
 /* ColorRow styles */
-@import "../index.css";
+@import "./SettingsPanelBase.css";
 
 .color-row-panel {
   display: flex;
@@ -17,5 +17,86 @@
 .color-row-panel.dragging {
   opacity: 0.7;
   background: var(--settings-panel-row-drag, rgba(0, 0, 0, 0.18));
-  box-shadow: 0 4px 16px #0003;
+  box-shadow: 0 4px 16px var(--settings-panel-shadow, #0003);
+}
+
+.color-row-arrows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-right: 8px;
+}
+
+.arrow-btn {
+  background: none;
+  border: none;
+  color: var(--color-white);
+  border-radius: 7px;
+  width: 28px;
+  height: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  transition: background 0.18s, color 0.18s;
+  outline: none;
+  padding: 0;
+}
+
+.arrow-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  background: none;
+}
+
+.arrow-btn:hover:not(:disabled) {
+  background: var(--settings-panel-arrow-hover, rgba(30, 136, 229, 0.18));
+  color: var(--settings-panel-arrow-color, #42a5f5);
+  box-shadow: none;
+}
+
+.add-color-btn {
+  margin-top: 8px;
+  width: 100%;
+  padding: 8px 0;
+  border-radius: 8px;
+  border: none;
+  background: var(--settings-panel-add-bg, var(--color-panel-hover));
+  color: var(--settings-panel-add-color, var(--color-white));
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.add-color-btn:hover {
+  background: var(--settings-panel-add-hover, var(--color-panel));
+}
+
+.color-row-delete {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.color-row-delete .arrow-btn {
+  color: var(--settings-panel-delete-default);
+  transition: color 0.18s, background 0.18s;
+}
+
+.color-row-delete .arrow-btn:hover {
+  color: var(--settings-panel-delete-hover, #e57373);
+  background: var(--settings-panel-delete-bg, rgba(255, 0, 0, 0.08));
+}
+
+.color-row-delete-btn {
+  color: var(--settings-panel-delete-default, var(--color-white));
+  background: none;
+  transition: color 0.18s, background 0.18s;
+}
+
+.color-row-delete-btn:hover {
+  color: var(--settings-panel-delete-hover, #e57373);
+  background: var(--settings-panel-delete-bg, rgba(255, 0, 0, 0.08));
 }

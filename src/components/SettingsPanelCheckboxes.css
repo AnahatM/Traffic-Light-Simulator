@@ -1,5 +1,4 @@
-/* Checkboxes styles */
-@import "../index.css";
+@import "./SettingsPanelBase.css";
 
 .setting-checkbox-group {
   display: flex;

@@ -1,0 +1,94 @@
+@import "./SettingsPanelBase.css";
+
+.settings-collapsible {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 10;
+}
+
+#toggleSettings {
+  font-size: 1.5em;
+  background: var(--color-panel);
+  backdrop-filter: var(--color-panel-blur);
+  color: var(--color-white);
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px #0004;
+  transition: background 0.2s, box-shadow 0.2s;
+  aspect-ratio: 1/1;
+}
+
+#toggleSettings:hover {
+  background: var(--color-panel-hover);
+  box-shadow: 0 4px 16px #0006;
+}
+
+.settings {
+  margin: 0;
+  left: 0;
+  top: 0;
+  box-shadow: var(--color-shadow);
+  border-radius: 18px;
+  min-width: 340px;
+  max-width: 30vw;
+  margin-left: 0;
+  margin-right: 0;
+  background: var(--color-panel);
+  backdrop-filter: var(--color-panel-blur);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: var(--color-shadow);
+  display: block;
+  transition: max-height 0.4s, opacity 0.4s, padding 0.4s;
+  max-height: 85vh;
+  overflow-y: auto;
+  opacity: 1;
+  border: none;
+}
+
+.settings.collapsed {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 20px;
+  border-width: 0;
+  overflow: hidden;
+}
+
+.settings-footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9em;
+}
+
+.settings-footer a {
+  color: var(--settings-panel-footer-link, var(--color-white));
+  opacity: 0.7;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.settings-footer a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+@media (max-width: 500px) {
+  .settings {
+    min-width: 0;
+    width: 95vw;
+    max-width: 95vw;
+    font-size: 0.9em;
+    padding: 15px 5vw;
+    max-height: 90vh;
+  }
+  .settings-collapsible {
+    left: 8px;
+    top: 8px;
+  }
+}

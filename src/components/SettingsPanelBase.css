@@ -1,0 +1,28 @@
+/* Base styles and variables for SettingsPanel and all subcomponents */
+:root {
+  --settings-panel-bg: var(--color-panel);
+  --settings-panel-hover: var(--color-panel-hover);
+  --settings-panel-border: var(--color-border);
+  --settings-panel-shadow: var(--color-shadow);
+  --settings-panel-white: var(--color-white);
+  --settings-panel-red: var(--color-red);
+  --settings-panel-yellow: var(--color-yellow);
+  --settings-panel-green: var(--color-green);
+  --settings-panel-delete-hover: #e57373;
+  --settings-panel-delete-default: var(--color-white);
+  --settings-panel-label: #e0e0e0;
+  --settings-panel-input-bg: #181d1c;
+  --settings-panel-input: #fff;
+  --settings-panel-accent: #4fc3f7;
+  --settings-panel-loop-bg: var(--color-panel);
+  --settings-panel-loop-gradient: #181c22e6;
+  --settings-panel-row-bg: rgba(0, 0, 0, 0.1);
+  --settings-panel-row-drag: rgba(0, 0, 0, 0.18);
+  --settings-panel-arrow-hover: rgba(30, 136, 229, 0.18);
+  --settings-panel-arrow-color: #42a5f5;
+  --settings-panel-add-bg: var(--color-panel-hover);
+  --settings-panel-add-color: var(--color-white);
+  --settings-panel-add-hover: var(--color-panel);
+  --settings-panel-delete-bg: rgba(255, 0, 0, 0.08);
+  --settings-panel-footer-link: var(--color-white);
+}

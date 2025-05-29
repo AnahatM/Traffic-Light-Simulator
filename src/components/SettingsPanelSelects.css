@@ -1,6 +1,36 @@
 /* Selects styles */
 @import "../index.css";
+@import "./SettingsPanelBase.css";
 
 .setting-select {
   margin-bottom: 1em;
+}
+
+.random-time-settings {
+  background: var(--settings-panel-bg, var(--color-panel));
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.random-time-settings .setting-row label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.random-time-settings .setting-label {
+  flex: 0 0 80px;
+}
+
+.random-time-settings input {
+  flex: 1;
+  border-radius: 8px;
+  border: none;
+  padding: 8px 10px;
+  font-size: 1em;
+  background: var(--color-panel);
+  color: var(--color-white);
+  outline: none;
+  box-shadow: 0 1px 4px #0002;
 }

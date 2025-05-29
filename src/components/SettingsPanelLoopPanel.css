@@ -1,8 +1,8 @@
 /* LoopPanel styles */
-@import "../index.css";
+@import "./SettingsPanelBase.css";
 
 .loop-panel {
-  background: var(--settings-panel-loop-bg);
+  background: var(--settings-panel-loop-bg, var(--color-panel));
   padding: 10px 8px;
   border-radius: 12px;
   margin-bottom: 18px;
@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  box-shadow: 0 2px 8px #0002;
+  box-shadow: 0 2px 8px var(--settings-panel-shadow, #0002);
   position: relative;
 }
 
@@ -29,5 +29,5 @@
     transparent
   );
   border-radius: 0 0 12px 12px;
-  z-index: 10;
+  z-index: 2;
 }

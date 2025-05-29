@@ -1,5 +1,5 @@
 /* Buttons styles */
-@import "../index.css";
+@import "./SettingsPanelBase.css";
 
 .settings-buttons {
   display: flex;

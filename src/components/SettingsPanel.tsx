@@ -1,5 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-import "./SettingsPanel.css";
+import "./SettingsPanelLayout.css";
+import "./SettingsPanelLoopPanel.css";
+import "./SettingsPanelColorRow.css";
+import "./SettingsPanelCheckboxes.css";
+import "./SettingsPanelButtons.css";
+import "./SettingsPanelSelects.css";
 import LoopPanel from "./SettingsPanelLoopPanel";
 import SettingsPanelCheckboxes from "./SettingsPanelCheckboxes.tsx";
 import SettingsPanelSelects from "./SettingsPanelSelects.tsx";
