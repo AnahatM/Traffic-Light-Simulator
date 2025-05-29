@@ -9,6 +9,7 @@ import LoopPanel from "./SettingsPanelLoopPanel";
 import SettingsPanelCheckboxes from "./SettingsPanelCheckboxes.tsx";
 import SettingsPanelSelects from "./SettingsPanelSelects.tsx";
 import SettingsPanelButtons from "./SettingsPanelButtons.tsx";
+import Collapsible from "./Collapsible";
 import type { LightState, LightTiming } from "./TrafficLight";
 
 interface SettingsPanelProps {
@@ -331,7 +332,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = (props) => {
               enableShading: true,
               colors: { red: "#d32f2f", yellow: "#fbc02d", green: "#43a047" },
               colorOrder: ["red", "yellow", "green"],
-              loopMode: "cycle",
+              loopMode: "pingpong",
             });
             // Also update parent state to match
             props.setTimes({ red: 1, yellow: 1, green: 1 });
@@ -352,63 +353,75 @@ const SettingsPanel: React.FC<SettingsPanelProps> = (props) => {
               green: "#43a047",
             });
             props.setColorOrder(["red", "yellow", "green"]);
-            props.setLoopMode("cycle");
+            props.setLoopMode("pingpong");
           }}
         />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 8,
-            marginTop: 12,
-          }}
+        <Collapsible
+          headerContent={<span>More Options</span>}
+          defaultCollapsed={true}
+          className="settings-collapsible-advanced"
         >
-          <div style={{ display: "flex", gap: 8 }}>
-            <button onClick={handleExport} className="settings-buttons">
-              Export JSON
-            </button>
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="settings-buttons"
-            >
-              Import JSON
-            </button>
-            <input
-              type="file"
-              accept="application/json"
-              ref={fileInputRef}
-              style={{ display: "none" }}
-              onChange={handleImport}
-            />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 8,
+              marginTop: 12,
+            }}
+          >
+            <div style={{ display: "flex", gap: 8 }}>
+              <button
+                onClick={handleExport}
+                className="settings-panel-btn main-btn"
+              >
+                Export JSON
+              </button>
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="settings-panel-btn main-btn"
+              >
+                Import JSON
+              </button>
+              <input
+                type="file"
+                accept="application/json"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleImport}
+              />
+            </div>
+            <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+              <select
+                onChange={(e) =>
+                  handlePreset(presetConfigs[parseInt(e.target.value)].json)
+                }
+                style={{ flex: 1 }}
+                className="settings-panel-btn main-btn"
+              >
+                <option value="">Load Preset...</option>
+                {presetConfigs.map((preset, i) => (
+                  <option value={i} key={preset.name}>
+                    {preset.name}
+                  </option>
+                ))}
+              </select>
+              <button
+                onClick={() => handlePreset(presetConfigs[0].json)}
+                className="settings-panel-btn main-btn"
+              >
+                Default
+              </button>
+            </div>
+            <div className="settings-theme-switch">
+              <button
+                onClick={handleThemeSwitch}
+                className="settings-panel-btn main-btn"
+              >{`Switch to ${
+                theme === "dark" ? "Light" : "Dark"
+              } Theme`}</button>
+            </div>
           </div>
-          <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
-            <select
-              onChange={(e) =>
-                handlePreset(presetConfigs[parseInt(e.target.value)].json)
-              }
-              style={{ flex: 1 }}
-            >
-              <option value="">Load Preset...</option>
-              {presetConfigs.map((preset, i) => (
-                <option value={i} key={preset.name}>
-                  {preset.name}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={() => handlePreset(presetConfigs[0].json)}
-              className="settings-buttons"
-            >
-              Default
-            </button>
-          </div>
-        </div>
-        <div className="settings-theme-switch">
-          <button
-            onClick={handleThemeSwitch}
-            className="settings-panel-theme-btn"
-          >{`Switch to ${theme === "dark" ? "Light" : "Dark"} Theme`}</button>
-        </div>
+        </Collapsible>
         <div className="settings-footer">
           <a
             href="https://github.com/AnahatM/Traffic-Light-Simulator"

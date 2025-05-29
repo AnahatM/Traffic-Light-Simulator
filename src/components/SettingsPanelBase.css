@@ -58,6 +58,9 @@
 .settings-panel-theme-btn:hover {
   background: var(--settings-panel-hover);
 }
+.settings-panel-btn:focus {
+  outline: 2px solid var(--settings-panel-accent, #4fc3f7);
+}
 .settings-panel-btn-secondary {
   background: transparent;
   border: 1.5px solid var(--settings-panel-border);

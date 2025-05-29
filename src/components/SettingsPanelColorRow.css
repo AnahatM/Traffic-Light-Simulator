@@ -8,7 +8,8 @@
   background: var(--settings-panel-row-bg, rgba(0, 0, 0, 0.1));
   border-radius: 10px;
   padding: 4px 8px;
-  height: 50px;
+  height: 56px; /* Back to a moderate height */
+  min-height: 56px;
   box-shadow: 0 1px 4px #0001;
   transition: box-shadow 0.2s, background 0.2s;
   cursor: grab;
@@ -23,8 +24,10 @@
 .color-row-arrows {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  align-items: center;
+  justify-content: center;
   margin-right: 8px;
+  height: 100%;
 }
 
 .arrow-btn {
@@ -32,8 +35,9 @@
   border: none;
   color: var(--color-white);
   border-radius: 7px;
-  width: 28px;
-  height: 22px;
+  width: 24px;
+  height: 20px;
+  font-size: 0.95em;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -56,28 +60,20 @@
   box-shadow: none;
 }
 
-.add-color-btn {
-  margin-top: 8px;
-  width: 100%;
-  padding: 8px 0;
-  border-radius: 8px;
-  border: none;
-  background: var(--settings-panel-add-bg, var(--color-panel-hover));
-  color: var(--settings-panel-add-color, var(--color-white));
-  font-size: 1em;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.add-color-btn:hover {
-  background: var(--settings-panel-add-hover, var(--color-panel));
-}
-
 .color-row-delete {
   display: flex;
   align-items: center;
   margin-left: 8px;
+  height: 100%;
+}
+
+.color-row-delete .arrow-btn,
+.color-row-delete-btn {
+  width: 24px;
+  height: 20px;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
 }
 
 .color-row-delete .arrow-btn {
@@ -101,24 +97,40 @@
   background: var(--settings-panel-delete-bg, rgba(255, 0, 0, 0.08));
 }
 
-@media (max-width: 400px) {
-  .settings-panel-color-row {
-    flex-direction: column;
-    height: auto;
-    align-items: stretch;
-    padding-bottom: 0.5em;
-  }
-  .settings-panel-color-row-main {
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-  }
-  .settings-panel-color-row-actions {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    gap: 1em;
-    margin-top: 0.3em;
-    width: 100%;
-  }
+/* Style for main action buttons (Apply/Reset/Export/Import/Preset/Theme) */
+.main-btn {
+  font-size: 1em;
+  padding: 8px 24px;
+  border-radius: 12px;
+  border: 1px solid var(--color-panel-hover);
+  background: var(--color-panel);
+  color: var(--color-white);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  outline: none;
+  min-width: 120px;
+  min-height: 44px;
+  font-weight: 500;
+}
+.main-btn:hover {
+  background: var(--color-panel-hover);
+}
+
+.add-color-btn {
+  margin-top: 8px;
+  width: 100%;
+  padding: 8px 0;
+  border-radius: 8px;
+  border: none;
+  background: var(--settings-panel-add-bg, var(--color-panel-hover));
+  color: var(--settings-panel-add-color, var(--color-white));
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 4px #0002;
+}
+
+.add-color-btn:hover {
+  background: var(--settings-panel-add-hover, var(--color-panel));
 }
