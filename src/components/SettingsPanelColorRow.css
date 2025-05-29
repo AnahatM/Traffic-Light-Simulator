@@ -8,10 +8,10 @@
   background: var(--settings-panel-row-bg, rgba(0, 0, 0, 0.1));
   border-radius: 10px;
   padding: 4px 8px;
+  height: 50px;
   box-shadow: 0 1px 4px #0001;
   transition: box-shadow 0.2s, background 0.2s;
   cursor: grab;
-  min-height: 44px;
 }
 
 .color-row-panel.dragging {
@@ -104,7 +104,6 @@
 @media (max-width: 400px) {
   .settings-panel-color-row {
     flex-direction: column;
-    min-height: 5.5em;
     height: auto;
     align-items: stretch;
     padding-bottom: 0.5em;

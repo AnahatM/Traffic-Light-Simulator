@@ -85,13 +85,17 @@
 }
 
 @media (max-width: 600px) {
+  .settings-collapsible {
+    left: 0 !important;
+  }
   .settings {
     min-width: 0;
-    width: 98vw;
-    max-width: 98vw;
+    width: 100vw;
+    max-width: 100vw;
     font-size: 0.95em;
-    padding: 12px 2vw;
-    max-height: 95vh;
+    padding: 10px;
+    max-height: calc(100vh - 90px);
+    margin: 0;
   }
   .settings-collapsible {
     left: 4px;
