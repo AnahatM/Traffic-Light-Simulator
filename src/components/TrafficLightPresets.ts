@@ -1,0 +1,166 @@
+// TrafficLightPresets.ts
+// Preset configurations for the Traffic Light Simulator
+
+const presetConfigs = [
+  {
+    name: "Classic 3-Light",
+    json: {
+      times: { red: 1, yellow: 1, green: 1 },
+      enabled: { red: true, yellow: true, green: true },
+      colorOrder: ["red", "yellow", "green"],
+      colors: { red: "#d32f2f", yellow: "#fbc02d", green: "#43a047" },
+      loopMode: "cycle",
+      direction: "vertical",
+      displayLayout: "rectangular",
+    },
+  },
+  {
+    name: "4-Light (UK)",
+    json: {
+      times: { red: 1, yellow: 1, green: 1, yellow2: 1 },
+      enabled: { red: true, yellow: true, green: true, yellow2: true },
+      colorOrder: ["red", "yellow", "green", "yellow2"],
+      colors: {
+        red: "#d32f2f",
+        yellow: "#fbc02d",
+        green: "#43a047",
+        yellow2: "#fbc02d",
+      },
+      loopMode: "cycle",
+      direction: "vertical",
+      displayLayout: "rectangular",
+    },
+  },
+  {
+    name: "Rainbow (6 colors)",
+    json: {
+      times: {
+        red: 0.7,
+        orange: 0.7,
+        yellow: 0.7,
+        green: 0.7,
+        blue: 0.7,
+        violet: 0.7,
+      },
+      enabled: {
+        red: true,
+        orange: true,
+        yellow: true,
+        green: true,
+        blue: true,
+        violet: true,
+      },
+      colorOrder: ["red", "orange", "yellow", "green", "blue", "violet"],
+      colors: {
+        red: "#e53935",
+        orange: "#fb8c00",
+        yellow: "#fbc02d",
+        green: "#43a047",
+        blue: "#1e88e5",
+        violet: "#8e24aa",
+      },
+      loopMode: "cycle",
+      direction: "vertical",
+      displayLayout: "rectangular",
+    },
+  },
+  {
+    name: "Grayscale (3 shades)",
+    json: {
+      times: { gray1: 1, gray2: 1, gray3: 1 },
+      enabled: { gray1: true, gray2: true, gray3: true },
+      colorOrder: ["gray1", "gray2", "gray3"],
+      colors: {
+        gray1: "#222",
+        gray2: "#888",
+        gray3: "#eee",
+      },
+      loopMode: "pingpong",
+      direction: "horizontal",
+      displayLayout: "rectangular",
+    },
+  },
+  {
+    name: "Pastel Party",
+    json: {
+      times: { pink: 1, mint: 1, sky: 1, lemon: 1 },
+      enabled: { pink: true, mint: true, sky: true, lemon: true },
+      colorOrder: ["pink", "mint", "sky", "lemon"],
+      colors: {
+        pink: "#ffb6c1",
+        mint: "#b2f2bb",
+        sky: "#a5d8ff",
+        lemon: "#fff9b1",
+      },
+      loopMode: "random",
+      direction: "vertical",
+      displayLayout: "rectangular",
+    },
+  },
+  {
+    name: "Monochrome Blue",
+    json: {
+      times: { blue1: 1, blue2: 1, blue3: 1 },
+      enabled: { blue1: true, blue2: true, blue3: true },
+      colorOrder: ["blue1", "blue2", "blue3"],
+      colors: {
+        blue1: "#1565c0",
+        blue2: "#42a5f5",
+        blue3: "#b3e5fc",
+      },
+      loopMode: "cycle",
+      direction: "horizontal",
+      displayLayout: "rectangular",
+    },
+  },
+  {
+    name: "Disco (8 colors)",
+    json: {
+      times: {
+        red: 0.5,
+        orange: 0.5,
+        yellow: 0.5,
+        green: 0.5,
+        blue: 0.5,
+        violet: 0.5,
+        pink: 0.5,
+        lime: 0.5,
+      },
+      enabled: {
+        red: true,
+        orange: true,
+        yellow: true,
+        green: true,
+        blue: true,
+        violet: true,
+        pink: true,
+        lime: true,
+      },
+      colorOrder: [
+        "red",
+        "orange",
+        "yellow",
+        "green",
+        "blue",
+        "violet",
+        "pink",
+        "lime",
+      ],
+      colors: {
+        red: "#e53935",
+        orange: "#fb8c00",
+        yellow: "#fbc02d",
+        green: "#43a047",
+        blue: "#1e88e5",
+        violet: "#8e24aa",
+        pink: "#ffb6c1",
+        lime: "#d4ff00",
+      },
+      loopMode: "random",
+      direction: "horizontal",
+      displayLayout: "rectangular",
+    },
+  },
+];
+
+export default presetConfigs;

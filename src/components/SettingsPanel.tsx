@@ -11,6 +11,7 @@ import SettingsPanelSelects from "./SettingsPanelSelects.tsx";
 import SettingsPanelButtons from "./SettingsPanelButtons.tsx";
 import Collapsible from "./Collapsible";
 import type { LightState, LightTiming } from "./TrafficLight";
+import TrafficLightPresets from "./TrafficLightPresets";
 
 interface SettingsPanelProps {
   times: LightTiming;
@@ -64,37 +65,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = (props) => {
     loopMode: props.loopMode,
   });
 
-  const presetConfigs = [
-    {
-      name: "Classic 3-Light",
-      json: {
-        times: { red: 1, yellow: 1, green: 1 },
-        enabled: { red: true, yellow: true, green: true },
-        colorOrder: ["red", "yellow", "green"],
-        colors: { red: "#d32f2f", yellow: "#fbc02d", green: "#43a047" },
-        loopMode: "cycle",
-        direction: "vertical",
-        displayLayout: "rectangular",
-      },
-    },
-    {
-      name: "4-Light (UK)",
-      json: {
-        times: { red: 1, yellow: 1, green: 1, yellow2: 1 },
-        enabled: { red: true, yellow: true, green: true, yellow2: true },
-        colorOrder: ["red", "yellow", "green", "yellow2"],
-        colors: {
-          red: "#d32f2f",
-          yellow: "#fbc02d",
-          green: "#43a047",
-          yellow2: "#fbc02d",
-        },
-        loopMode: "cycle",
-        direction: "vertical",
-        displayLayout: "rectangular",
-      },
-    },
-  ];
+  const presetConfigs = TrafficLightPresets;
 
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
