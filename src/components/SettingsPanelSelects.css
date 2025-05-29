@@ -34,3 +34,48 @@
   outline: none;
   box-shadow: 0 1px 4px #0002;
 }
+
+.random-range-controls {
+  background: var(--settings-panel-bg, var(--color-panel));
+  border-radius: 16px;
+  padding: 1.2em 1.5em 1.2em 1.5em;
+  margin-bottom: 1.2em;
+  margin-top: 0.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  box-shadow: 0 2px 8px 0 var(--settings-panel-shadow, rgba(0, 0, 0, 0.1));
+}
+
+.random-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2em;
+  margin-bottom: 0.5em;
+}
+
+.random-row label {
+  color: var(--settings-panel-label, #e0e0e0);
+  font-size: 1.05em;
+  min-width: 6em;
+  margin-bottom: 0;
+  margin-right: 0.5em;
+  text-align: left;
+}
+
+.random-input {
+  background: var(--settings-panel-input-bg, #181d1c);
+  color: var(--settings-panel-input, #fff);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5em 1em;
+  font-size: 1.2em;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: box-shadow 0.2s;
+  width: 8em;
+}
+
+.random-input:focus {
+  box-shadow: 0 0 0 2px var(--settings-panel-accent, #4fc3f7);
+}
