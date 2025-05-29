@@ -3,6 +3,7 @@
 
 .loop-panel {
   background: var(--settings-panel-loop-bg, var(--color-panel));
+  border: 1px solid var(--color-panel-hover);
   padding: 10px 8px;
   border-radius: 12px;
   margin-bottom: 18px;

@@ -444,5 +444,3 @@ const SettingsPanel: React.FC<SettingsPanelProps> = (props) => {
 };
 
 export default SettingsPanel;
-
-// TODO: Implement bounce (pingpong) mode logic in TrafficLight component

@@ -204,25 +204,23 @@
   /* Portrait screens */
   .traffic-lights.circular .light {
     width: 28vw;
-    height: 28vw;
+    /* Remove height: 28vw; to preserve aspect-ratio */
   }
-
   .traffic-lights.circular.fullscreen .light.active {
     width: 80vw;
-    height: 80vw;
+    /* Remove height: 80vw; to preserve aspect-ratio */
   }
 }
 
 @media (min-aspect-ratio: 1/1) {
   /* Landscape screens */
   .traffic-lights.circular .light {
-    width: 28vh;
     height: 28vh;
+    /* Remove width: 28vh; to preserve aspect-ratio */
   }
-
   .traffic-lights.circular.fullscreen .light.active {
-    width: 80vh;
     height: 80vh;
+    /* Remove width: 80vh; to preserve aspect-ratio */
   }
 }
 
