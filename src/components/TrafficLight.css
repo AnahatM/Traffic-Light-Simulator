@@ -52,20 +52,15 @@
   min-width: 60px;
   min-height: 60px;
   width: min(22vw, 22vh);
-  height: min(22vw, 22vh);
   margin: 0;
   align-items: center;
   justify-content: center;
   display: flex;
 }
 
-.traffic-lights.circular.vertical .light {
-  width: min(22vw, 22vh);
-  height: min(22vw, 22vh);
-}
+.traffic-lights.circular.vertical .light,
 .traffic-lights.circular.horizontal .light {
   width: min(22vw, 22vh);
-  height: min(22vw, 22vh);
 }
 
 /* Remove borders in circular layout */
@@ -204,23 +199,19 @@
   /* Portrait screens */
   .traffic-lights.circular .light {
     width: 28vw;
-    /* Remove height: 28vw; to preserve aspect-ratio */
   }
   .traffic-lights.circular.fullscreen .light.active {
     width: 80vw;
-    /* Remove height: 80vw; to preserve aspect-ratio */
   }
 }
 
 @media (min-aspect-ratio: 1/1) {
   /* Landscape screens */
   .traffic-lights.circular .light {
-    height: 28vh;
-    /* Remove width: 28vh; to preserve aspect-ratio */
+    width: 28vh;
   }
   .traffic-lights.circular.fullscreen .light.active {
-    height: 80vh;
-    /* Remove width: 80vh; to preserve aspect-ratio */
+    width: 80vh;
   }
 }
 
