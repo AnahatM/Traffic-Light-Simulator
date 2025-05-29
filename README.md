@@ -25,6 +25,9 @@ _Source code also includes a simple plain HTML, CSS, and JS version with limited
 - **Fullscreen mode**: Option to show only the currently active light, filling the screen for maximum visibility.
 - **Responsive design**: Works on desktop and mobile.panel.
 - **Additional customization**: Toggle light shading, enable/disable clicking lights, and more advanced settings.
+- **Reorder colors**: Drag and drop or use arrows to reorder the sequence of lights.
+- **Add/delete custom colors**: Add new custom lights with any color, and remove them as needed.
+- **Loop modes**: Choose between Cycle (repeat), Bounce (back & forth), or Random (random order, no repeats until all shown).
 
 ## Usage
 
@@ -50,7 +53,7 @@ _Source code also includes a simple plain HTML, CSS, and JS version with limited
 - `src/App.tsx` — Main app logic and default settings
 - `src/components/TrafficLight.tsx` — Traffic light display
 - `src/components/Light.tsx` — Individual light component
-- `src/components/SettingsPanel.tsx` — Settings UI
+- `src/components/SettingsPanel.tsx` — Settings UI (now split into subcomponents)
 
 ## Customization
 

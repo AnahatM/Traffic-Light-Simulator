@@ -1,0 +1,34 @@
+/* LoopPanel styles */
+@import "./SettingsPanelBase.css";
+
+.loop-panel {
+  background: var(--settings-panel-loop-bg, var(--color-panel));
+  border: 1px solid var(--color-panel-hover);
+  padding: 10px 8px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  max-height: 260px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 2px 8px var(--settings-panel-shadow, #0002);
+  position: relative;
+}
+
+.loop-panel.has-overflow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 32px;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    var(--settings-panel-loop-gradient, #181c22e6) 80%,
+    transparent
+  );
+  border-radius: 0 0 12px 12px;
+  z-index: 2;
+}

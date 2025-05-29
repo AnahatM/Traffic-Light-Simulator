@@ -1,0 +1,137 @@
+/* ColorRow styles */
+@import "./SettingsPanelBase.css";
+
+.color-row-panel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--settings-panel-row-bg, rgba(0, 0, 0, 0.1));
+  border-radius: 10px;
+  padding: 4px 8px;
+  height: 56px; /* Back to a moderate height */
+  min-height: 56px;
+  box-shadow: 0 1px 4px #0001;
+  transition: box-shadow 0.2s, background 0.2s;
+  cursor: grab;
+  border: 1px solid var(--color-panel-hover);
+}
+
+.color-row-panel.dragging {
+  opacity: 0.7;
+  background: var(--settings-panel-row-drag, rgba(0, 0, 0, 0.18));
+  box-shadow: 0 4px 16px var(--settings-panel-shadow, #0003);
+}
+
+.color-row-arrows {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  height: 100%;
+}
+
+.arrow-btn {
+  background: none;
+  border: none;
+  color: var(--color-white);
+  border-radius: 7px;
+  width: 24px;
+  height: 20px;
+  font-size: 0.95em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  transition: background 0.18s, color 0.18s;
+  outline: none;
+  padding: 0;
+}
+
+.arrow-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  background: none;
+}
+
+.arrow-btn:hover:not(:disabled) {
+  background: var(--settings-panel-arrow-hover, rgba(30, 136, 229, 0.18));
+  color: var(--settings-panel-arrow-color, #42a5f5);
+  box-shadow: none;
+}
+
+.color-row-delete {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  height: 100%;
+}
+
+.color-row-delete .arrow-btn,
+.color-row-delete-btn {
+  width: 24px;
+  height: 20px;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+}
+
+.color-row-delete .arrow-btn {
+  color: var(--settings-panel-delete-default);
+  transition: color 0.18s, background 0.18s;
+}
+
+.color-row-delete .arrow-btn:hover {
+  color: var(--settings-panel-delete-hover, #e57373);
+  background: var(--settings-panel-delete-bg, rgba(255, 0, 0, 0.08));
+}
+
+.color-row-delete-btn {
+  color: var(--settings-panel-delete-default, var(--color-white));
+  background: none;
+  transition: color 0.18s, background 0.18s;
+}
+
+.color-row-delete-btn:hover {
+  color: var(--settings-panel-delete-hover, #e57373);
+  background: var(--settings-panel-delete-bg, rgba(255, 0, 0, 0.08));
+}
+
+/* Style for main action buttons (Apply/Reset/Export/Import/Preset/Theme) */
+.main-btn {
+  font-size: 1em;
+  padding: 8px 24px;
+  border-radius: 12px;
+  border: 1px solid var(--color-panel-hover);
+  background: var(--color-panel);
+  color: var(--color-white);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  outline: none;
+  min-width: 120px;
+  min-height: 44px;
+  font-weight: 500;
+}
+.main-btn:hover {
+  background: var(--color-panel-hover);
+}
+
+.add-color-btn {
+  margin-top: 8px;
+  width: 100%;
+  padding: 8px 0;
+  border-radius: 8px;
+  border: none;
+  background: var(--settings-panel-add-bg, var(--color-panel-hover));
+  color: var(--settings-panel-add-color, var(--color-white));
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 4px #0002;
+}
+
+.add-color-btn:hover {
+  background: var(--settings-panel-add-hover, var(--color-panel));
+}
